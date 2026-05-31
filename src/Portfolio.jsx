@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import './index.css'
 import me from '/me.png'
+import emailjs from "@emailjs/browser";
+
 
 const NAV_LINKS = ["About", "Skills", "Projects", "Contact"];
 
@@ -88,6 +90,8 @@ export default function Portfolio() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [copied, setCopied] = useState(null);
 
+ 
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll);
@@ -110,6 +114,26 @@ export default function Portfolio() {
     navigator.clipboard.writeText(value);
     setCopied(label);
     setTimeout(() => setCopied(null), 2000);
+  };
+
+   const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm(
+      "service_64hb1z9",
+      "template_uq4w7e8",
+      form.current,
+      "jMxsifjnpdHnFdQtK"
+    )
+    .then(() => {
+      alert("Message sent!");
+      e.target.reset();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   };
 
   const css = `
@@ -908,14 +932,14 @@ export default function Portfolio() {
                 {[
                   { icon: "✉", label: "Email", value: "symmonjaredgagaring@email.com", action: ()=>handleCopy({label: "Email", value: "symmonjaredgagaring@email.com"}) },
 
-                  { icon: "💼", label: "LinkedIn", value: "/in/symmonjaredgagaring", action: () => handleCopy({label: "LinkedIn", value: "/in/symmonjaredgagaring"}) },
+                  { icon: "💼", label: "LinkedIn", value: "www.linkedin.com/in/symmon-jared-gagaring-b20a24412", action: () => handleCopy({label: "LinkedIn", value: "www.linkedin.com/in/symmon-jared-gagaring-b20a24412"}) },
                   
                   { icon: "🐙", label: "GitHub", value: "github.com/SyJared", action: () => handleCopy({label: "GitHub", value: "github.com/SyJared"}) },
                 ].map((link) => (
                   <div key={link.label} className="contact-link-item" onClick={link.action}>
                     <span className="contact-link-icon">{link.icon}</span>
                     <span className="contact-link-label">{link.label}</span>
-                    <span className="contact-link-value">
+                    <span className="contact-link-value overflow-hidden" style={{ maxWidth: "200px", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                       {copied === link.label ? "Copied!" : link.value}
                     </span>
                     <span className="contact-link-arrow">→</span>
@@ -923,23 +947,28 @@ export default function Portfolio() {
                 ))}
               </div>
             </div>
-            <div className={`contact-form${contactInView ? " visible" : ""}`}>
+            <form className={`contact-form${contactInView ? " visible" : ""}`} ref={form} onSubmit={sendEmail}>
               <div className="form-group">
-                <label className="form-label">Your Name</label>
-                <input className="form-input" type="text" placeholder="John Doe" />
+                <label className="form-label" >Your Name</label>
+                <input className="form-input" type="text" placeholder="Symmon Jared"  name="from_name" required/>
               </div>
               <div className="form-group">
                 <label className="form-label">Email Address</label>
-                <input className="form-input" type="email" placeholder="john@example.com" />
+                <input className="form-input" type="email" placeholder="example@example.com" name="from_email" required />
               </div>
+              <input
+                type="hidden"
+                name="time"
+                value={new Date().toLocaleString()}
+              />
               <div className="form-group">
                 <label className="form-label">Message</label>
-                <textarea className="form-textarea" placeholder="Tell me about the opportunity..." />
+                <textarea className="form-textarea" placeholder="Tell me about the opportunity..." name="message" required />
               </div>
               <button className="btn-primary" style={{ width: "100%" }}>
                 Send Message →
               </button>
-            </div>
+            </form>
           </div>
         </div>
       </section>
