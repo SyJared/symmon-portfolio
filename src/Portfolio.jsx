@@ -118,23 +118,48 @@ export default function Portfolio() {
 
    const form = useRef();
 
-  const sendEmail = (e) => {
-    e.preventDefault();
+ const showToast = (type, message, sub) => {
+  const existing = document.getElementById("toast-container");
+  if (existing) existing.remove();
 
-    emailjs.sendForm(
-      "service_64hb1z9",
-      "template_uq4w7e8",
-      form.current,
-      "jMxsifjnpdHnFdQtK"
-    )
+  const toast = document.createElement("div");
+  toast.id = "toast-container";
+  toast.innerHTML = `
+    <span class="toast-icon">${type === "success" ? "✓" : "✗"}</span>
+    <div class="toast-msg">
+      ${message}
+      ${sub ? `<span>${sub}</span>` : ""}
+    </div>
+    <div class="toast-bar"></div>
+  `;
+  toast.className = `toast ${type}`;
+  document.body.appendChild(toast);
+
+  requestAnimationFrame(() => {
+    toast.classList.add("show");
+    const bar = toast.querySelector(".toast-bar");
+    bar.style.transition = "transform 3.2s linear";
+    bar.style.transform = "scaleX(0)";
+  });
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.remove(), 400);
+  }, 3200);
+};
+
+const sendEmail = (e) => {
+  e.preventDefault();
+
+  emailjs.sendForm("service_64hb1z9", "template_uq4w7e8", form.current, "jMxsifjnpdHnFdQtK")
     .then(() => {
-      alert("Message sent!");
+      showToast("success", "Message sent!", "I'll get back to you soon.");
       e.target.reset();
     })
-    .catch((error) => {
-      console.error(error);
+    .catch(() => {
+      showToast("error", "Something went wrong.", "Please try again later.");
     });
-  };
+};
 
   const css = `
     @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
@@ -156,6 +181,44 @@ export default function Portfolio() {
       transform: translate(-50%, -50%);
       transition: transform 0.1s ease;
     }
+      .toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #0e1117;
+  border: 0.5px solid #00e5ff33;
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: #e8eaf0;
+  min-width: 240px;
+  z-index: 9999;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+  pointer-events: none;
+  overflow: hidden;
+}
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+.toast.success .toast-icon { color: #00e5ff; }
+.toast.error .toast-icon { color: #ff5470; }
+.toast.error { border-color: #ff547033; }
+.toast-icon { font-size: 16px; flex-shrink: 0; }
+.toast-msg span { display: block; font-size: 11px; color: #6b7280; margin-top: 2px; }
+.toast-bar {
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 2px;
+  width: 100%;
+  background: #00e5ff55;
+  transform-origin: left;
+  transform: scaleX(1);
+}
+.toast.error .toast-bar { background: #ff547055; }
 
     .noise {
       position: fixed;
