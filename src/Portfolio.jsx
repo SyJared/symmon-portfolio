@@ -44,22 +44,22 @@ const PROJECTS = [
     title: "DigiBarangay",
     tag: "Civic Tech",
     year: "2025",
-    description:
-      "A platform that streamlines barangay services — featuring a community bulletin board, real-time notifications, online document request system, and improved management of community records.",
+    description: "...",
     stack: ["React", "PHP", "MySQL"],
     color: "#00e5ff",
     icon: "🏛️",
+    github: "https://github.com/SyJared/digibaranggay"
   },
   {
     title: "Flow",
     tag: "Productivity",
     year: "2026",
-    description:
-      "An online web-based workspace built for any kind of work. Offers multiple workspaces and task boards, where each task can be assigned to a specific team member.",
+    description: "...",
     stack: ["React", "Express.js", "Node.js"],
     color: "#a78bfa",
     icon: "⚡",
-  },
+    github: "https://github.com/SyJared/flow"
+  }
 ];
 
 function useInView(threshold = 0.15) {
@@ -928,7 +928,7 @@ const sendEmail = (e) => {
                 style={{
                   transitionDelay: `${i * 0.15}s`,
                   "--card-color": p.color
-                }}
+                }}  onClick={() => window.open(p.github, "_blank", "noopener,noreferrer")}
               >
                 <div
                   className="project-card"
