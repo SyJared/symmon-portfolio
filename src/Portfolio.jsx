@@ -435,7 +435,13 @@ const sendEmail = (e) => {
       transition: all 0.2s;
     }
     .btn-secondary:hover { border-color: #00e5ff; color: #00e5ff; transform: translateY(-2px); }
-
+    .btn-secondary a,
+    a.btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      line-height: 1;
+    }
     .hero-visual {
       display: flex;
       justify-content: center;
