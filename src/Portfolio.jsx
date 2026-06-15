@@ -729,6 +729,33 @@ const sendEmail = (e) => {
   opacity: 1;
   transform: translateY(0);
 }
+  .project-hover-hint {
+  position: absolute;
+  bottom: 1.2rem;
+  right: 1.5rem;
+
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.25);
+
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all 0.25s ease;
+
+  pointer-events: none;
+}
+  .project-card:hover .project-hover-hint {
+  opacity: 1;
+  transform: translateY(0);
+  color: rgba(255, 255, 255, 0.6);
+}
+  .project-card {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+}
     .project-card:hover .project-glow { opacity: 0.12; }
 
     /* CONTACT */
@@ -980,75 +1007,71 @@ const sendEmail = (e) => {
           <div className="projects-grid">
             {PROJECTS.map((p, i) => (
               <div
-                key={p.title}
-                className={`project-card${projectsInView ? " visible" : ""}`}
-                style={{
-                  transitionDelay: `${i * 0.15}s`,
-                  "--card-color": p.color
-                }}
-                onClick={() => window.open(p.demo || p.github, "_blank", "noopener,noreferrer")}
-              >
-                <div
-                  className="project-card"
-                  style={{
-                    position: "static",
-                    border: "none",
-                    background: "none",
-                    padding: 0,
-                    opacity: 1,
-                    transform: "none"
-                  }}
-                >
-                  <div className="project-card-header">
-                    <div className="project-icon">{p.icon}</div>
+  key={p.title}
+  className={`project-card${projectsInView ? " visible" : ""}`}
+  style={{
+    transitionDelay: `${i * 0.15}s`,
+    "--card-color": p.color
+  }}
+  onClick={() =>
+    window.open(p.demo || p.github, "_blank", "noopener,noreferrer")
+  }
+>
+  <div className="project-card-header">
+    <div className="project-icon">{p.icon}</div>
 
-                    <div className="project-meta">
-                      <span
-                        className="project-tag"
-                        style={{ borderColor: `${p.color}44`, color: p.color }}
-                      >
-                        {p.tag}
-                      </span>
+    <div className="project-meta">
+      <span
+        className="project-tag"
+        style={{ borderColor: `${p.color}44`, color: p.color }}
+      >
+        {p.tag}
+      </span>
 
-                      <div className="project-year">{p.year}</div>
-                    </div>
+      <div className="project-year">{p.year}</div>
+    </div>
 
-                    {/* NEW: GitHub button */}
-                    <button
-                      className="project-github-btn"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.open(p.github, "_blank", "noopener,noreferrer");
-                      }}
-                      aria-label="Open GitHub"
-                    >
-                      ⟡
-                    </button>
-                  </div>
-                  <div className="project-title">{p.title}</div>
-                  <p className="project-desc">{p.description}</p>
-                  <div className="project-stack">
-                    {p.stack.map((t) => (
-                      <span key={t} className="stack-tag">{t}</span>
-                    ))}
-                  </div>
-                </div>
-                <div
-                  className="project-glow"
-                  style={{ background: p.color }}
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0, left: 0, right: 0,
-                    height: "2px",
-                    background: `linear-gradient(90deg, ${p.color}, transparent)`,
-                    opacity: 0,
-                    transition: "opacity 0.3s"
-                  }}
-                  className="card-line"
-                />
-              </div>
+    <button
+      className="project-github-btn"
+      onClick={(e) => {
+        e.stopPropagation();
+        window.open(p.github, "_blank", "noopener,noreferrer");
+      }}
+      aria-label="Open GitHub"
+    >
+      ⟡
+    </button>
+  </div>
+
+  <div className="project-title">{p.title}</div>
+  <p className="project-desc">{p.description}</p>
+
+  <div className="project-stack">
+    {p.stack.map((t) => (
+      <span key={t} className="stack-tag">{t}</span>
+    ))}
+  </div>
+  
+
+  <div className="project-glow" style={{ background: p.color }} />
+
+  <div
+    className="card-line"
+    style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      height: "2px",
+      background: `linear-gradient(90deg, ${p.color}, transparent)`,
+      opacity: 0,
+      transition: "opacity 0.3s"
+    }}
+  />
+  <div className="project-hover-hint">
+  View Demo →
+</div>
+</div>
             ))}
           </div>
         </div>
