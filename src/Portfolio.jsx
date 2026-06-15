@@ -626,12 +626,13 @@ const sendEmail = (e) => {
     .project-card:hover { transform: translateY(-6px); }
     .project-card:hover::before { opacity: 1; }
 
-    .project-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 1.2rem;
-    }
+   .project-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.2rem;
+  position: relative;
+}
     .project-icon { font-size: 2.2rem; }
     .project-meta { text-align: right; }
     .project-tag {
@@ -684,8 +685,8 @@ const sendEmail = (e) => {
     }
 .project-github-btn {
   position: absolute;
-  top: 1.2rem;
-  right: 1.2rem;
+  top: 0;
+  right: 0;
 
   width: 34px;
   height: 34px;
@@ -723,30 +724,22 @@ const sendEmail = (e) => {
   
 
 
-  .project-hover-hint {
-  position: absolute;
-  bottom: 1.2rem;
-  left: 1.5rem;   /* 👈 CHANGE from right → left */
-
+.project-hover-hint {
   font-size: 0.7rem;
   letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.35);
 
   opacity: 0;
   transform: translateY(6px);
   transition: all 0.25s ease;
-
-  pointer-events: none;
 }
 
 .project-card:hover .project-hover-hint {
   opacity: 1;
   transform: translateY(0);
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.7);
 }
-  .project-card-header {
-  position: relative;
-}
+
   .project-card {
   transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
@@ -754,6 +747,17 @@ const sendEmail = (e) => {
 .project-card:hover {
   transform: translateY(-8px);
 }
+  .project-card {
+  display: flex;
+  flex-direction: column;
+}
+  .project-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1.5rem;
+}
+  
     .project-card:hover .project-glow { opacity: 0.12; }
 
     /* CONTACT */
@@ -1044,11 +1048,17 @@ const sendEmail = (e) => {
   <div className="project-title">{p.title}</div>
   <p className="project-desc">{p.description}</p>
 
-  <div className="project-stack">
-    {p.stack.map((t) => (
-      <span key={t} className="stack-tag">{t}</span>
-    ))}
-  </div>
+ <div className="project-stack">
+  {p.stack.map((t) => (
+    <span key={t} className="stack-tag">{t}</span>
+  ))}
+</div>
+
+<div className="project-footer">
+  <span className="project-hover-hint">
+    View Demo →
+  </span>
+</div>
   
 
   <div className="project-glow" style={{ background: p.color }} />
@@ -1066,9 +1076,7 @@ const sendEmail = (e) => {
       transition: "opacity 0.3s"
     }}
   />
-  <div className="project-hover-hint">
-  View Demo →
-</div>
+ 
 </div>
             ))}
           </div>
