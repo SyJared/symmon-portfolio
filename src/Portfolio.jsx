@@ -166,7 +166,7 @@ const sendEmail = (e) => {
     @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { background: #090b10; color: #e8eaf0; font-family: 'DM Mono', monospace; overflow-x: hidden; }
+    body { background: #090b10; color: #e8eaf0; font-family: 'DM Mono', monospace; overflow-x: hidden; margin-top: -5rem; }
     ::selection { background: #00e5ff33; color: #00e5ff; }
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: #090b10; }
@@ -523,7 +523,7 @@ const sendEmail = (e) => {
       transition: all 0.7s ease 0.1s;
     }
     .section-title.visible { opacity: 1; transform: translateY(0); }
-    .section-title .dim { color: #2a3040; }
+    .section-title .dim { color: #00e5ff; }
 
     /* SKILLS */
     #skills { background: rgba(255,255,255,0.01); }
