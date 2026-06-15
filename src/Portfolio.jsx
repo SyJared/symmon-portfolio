@@ -657,9 +657,10 @@ const sendEmail = (e) => {
       font-size: 0.82rem;
       line-height: 1.7;
       color: #8892a4;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
     .project-stack {
+    margin-bottom: 1rem;
       display: flex;
       gap: 0.5rem;
       flex-wrap: wrap;
@@ -767,15 +768,33 @@ const sendEmail = (e) => {
   transform: translateY(-10px);
   border-color: rgba(255,255,255,0.12);
 }
-  .project-card {
-  display: flex;
-  flex-direction: column;
+.project-card {
+  display: block;
 }
-  .project-footer {
-  margin-top: auto;
+.project-footer {
+  margin-top: 3.5rem;
   display: flex;
   justify-content: flex-end;
-  padding-top: 1.5rem;
+}
+  .project-cta {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all 0.25s ease;
+
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #8892a4;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+}
+  .project-card:hover .project-cta {
+  opacity: 1;
+  transform: translateY(0);
+  color: #fff;
+  border-color: rgba(255,255,255,0.2);
 }
   
 .project-card:hover .project-glow {
