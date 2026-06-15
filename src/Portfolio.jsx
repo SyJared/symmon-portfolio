@@ -682,7 +682,7 @@ const sendEmail = (e) => {
       pointer-events: none;
       transition: opacity 0.3s;
     }
-      .project-github-btn {
+.project-github-btn {
   position: absolute;
   top: 1.2rem;
   right: 1.2rem;
@@ -702,6 +702,16 @@ const sendEmail = (e) => {
   transition: all 0.25s ease;
 
   backdrop-filter: blur(6px);
+
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+}
+
+.project-card:hover .project-github-btn {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .project-github-btn:hover {
@@ -710,29 +720,13 @@ const sendEmail = (e) => {
   color: #fff;
   background: rgba(255,255,255,0.05);
 }
-  .project-card::after {
-  content: "Open →";
-  position: absolute;
-  bottom: 1.2rem;
-  right: 1.5rem;
+  
 
-  font-size: 0.65rem;
-  color: rgba(255,255,255,0.25);
-  letter-spacing: 0.1em;
 
-  opacity: 0;
-  transform: translateY(4px);
-  transition: all 0.3s ease;
-}
-
-.project-card:hover::after {
-  opacity: 1;
-  transform: translateY(0);
-}
   .project-hover-hint {
   position: absolute;
   bottom: 1.2rem;
-  right: 1.5rem;
+  left: 1.5rem;   /* 👈 CHANGE from right → left */
 
   font-size: 0.7rem;
   letter-spacing: 0.1em;
@@ -744,10 +738,14 @@ const sendEmail = (e) => {
 
   pointer-events: none;
 }
-  .project-card:hover .project-hover-hint {
+
+.project-card:hover .project-hover-hint {
   opacity: 1;
   transform: translateY(0);
   color: rgba(255, 255, 255, 0.6);
+}
+  .project-card-header {
+  position: relative;
 }
   .project-card {
   transition: transform 0.35s ease, box-shadow 0.35s ease;
