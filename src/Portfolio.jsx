@@ -623,7 +623,7 @@ const sendEmail = (e) => {
       opacity: 0;
       transition: opacity 0.3s;
     }
-    .project-card:hover { transform: translateY(-6px); }
+
     .project-card:hover::before { opacity: 1; }
 
    .project-card-header {
@@ -675,19 +675,38 @@ const sendEmail = (e) => {
     }
 
     .project-glow {
-      position: absolute;
-      bottom: -60px; right: -60px;
-      width: 160px; height: 160px;
-      border-radius: 50%;
-      opacity: 0.06;
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-.project-github-btn {
   position: absolute;
-  top: 0;
-  right: 0;
+  inset: auto;
+  bottom: -120px;
+  right: -120px;
 
+  width: 260px;
+  height: 260px;
+
+  background: radial-gradient(
+    circle,
+    var(--card-color),
+    transparent 60%
+  );
+
+  opacity: 0;
+  filter: blur(40px);
+  transition: opacity 0.35s ease;
+
+  pointer-events: none;
+  z-index: 0;
+}
+  .project-card > * {
+  position: relative;
+  z-index: 2;
+}
+.project-github-btn {
+
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+
+  border-radius: 8px;
   width: 34px;
   height: 34px;
 
@@ -745,7 +764,8 @@ const sendEmail = (e) => {
 }
 
 .project-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-10px);
+  border-color: rgba(255,255,255,0.12);
 }
   .project-card {
   display: flex;
@@ -758,7 +778,9 @@ const sendEmail = (e) => {
   padding-top: 1.5rem;
 }
   
-    .project-card:hover .project-glow { opacity: 0.12; }
+.project-card:hover .project-glow {
+  opacity: 0.18;
+}
 
     /* CONTACT */
     #contact { background: rgba(255,255,255,0.01); }
@@ -1007,18 +1029,13 @@ const sendEmail = (e) => {
             Featured<br /><span className="dim">Projects.</span>
           </div>
           <div className="projects-grid">
-            {PROJECTS.map((p, i) => (
-              <div
-  key={p.title}
-  className={`project-card${projectsInView ? " visible" : ""}`}
-  style={{
-    transitionDelay: `${i * 0.15}s`,
-    "--card-color": p.color
-  }}
-  onClick={() =>
-    window.open(p.demo || p.github, "_blank", "noopener,noreferrer")
-  }
->
+        {PROJECTS.map((p, i) => (
+          <div className={`project-card${projectsInView ? " visible" : ""}`}
+            style={{
+              transitionDelay: `${i * 0.15}s`,
+              "--card-color": p.color
+            }}
+          >
   <div className="project-card-header">
     <div className="project-icon">{p.icon}</div>
 
@@ -1055,9 +1072,14 @@ const sendEmail = (e) => {
 </div>
 
 <div className="project-footer">
-  <span className="project-hover-hint">
+  <button
+    className="project-cta"
+    onClick={() =>
+      window.open(p.demo || p.github, "_blank", "noopener,noreferrer")
+    }
+  >
     View Demo →
-  </span>
+  </button>
 </div>
   
 
