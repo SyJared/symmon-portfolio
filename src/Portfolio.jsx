@@ -606,7 +606,7 @@ const sendEmail = (e) => {
     .project-card {
       border: 1px solid rgba(255,255,255,0.06);
       background: rgba(255,255,255,0.02);
-      padding: 2rem;
+      padding: 1.5rem;
       position: relative;
       overflow: hidden;
       cursor: pointer;
@@ -630,7 +630,7 @@ const sendEmail = (e) => {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
   position: relative;
 }
     .project-icon { font-size: 2.2rem; }
@@ -657,10 +657,10 @@ const sendEmail = (e) => {
       font-size: 0.82rem;
       line-height: 1.7;
       color: #8892a4;
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
     }
     .project-stack {
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
       display: flex;
       gap: 0.5rem;
       flex-wrap: wrap;
@@ -772,7 +772,7 @@ const sendEmail = (e) => {
   display: block;
 }
 .project-footer {
-  margin-top: 3.5rem;
+  margin-top: 1.2rem;
   display: flex;
   justify-content: flex-end;
 }
