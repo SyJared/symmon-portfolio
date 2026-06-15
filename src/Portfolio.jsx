@@ -599,22 +599,30 @@ const sendEmail = (e) => {
 
     /* PROJECTS */
     .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
-      gap: 2rem;
-    }
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
     .project-card {
-      border: 1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.02);
-      padding: 1.5rem;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      opacity: 0;
-      transform: translateY(28px);
-    }
-    .project-card.visible { opacity: 1; transform: translateY(0); }
+  display: block;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
+  padding: 1.25rem 1.25rem 3.25rem;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease,
+    opacity 0.35s ease;
+}
+.project-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
     .project-card::before {
       content: '';
       position: absolute;
@@ -626,11 +634,11 @@ const sendEmail = (e) => {
 
     .project-card:hover::before { opacity: 1; }
 
-   .project-card-header {
+ .project-card-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   position: relative;
 }
     .project-icon { font-size: 2.2rem; }
@@ -646,25 +654,25 @@ const sendEmail = (e) => {
     .project-year { font-size: 0.65rem; color: #8892a4; margin-top: 0.4rem; }
 
     .project-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: #fff;
-      margin-bottom: 0.8rem;
-    }
+  font-family: 'Syne', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #fff;
+  margin-bottom: 0.55rem;
+}
     .project-desc {
-      font-size: 0.82rem;
-      line-height: 1.7;
-      color: #8892a4;
-      margin-bottom: 0.8rem;
-    }
-    .project-stack {
-    margin-bottom: 0.8rem;
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #8892a4;
+  margin-bottom: 0.65rem;
+}
+   .project-stack {
+  margin-bottom: 0.4rem;
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
     .stack-tag {
       font-size: 0.62rem;
       letter-spacing: 0.1em;
@@ -772,29 +780,30 @@ const sendEmail = (e) => {
   display: block;
 }
 .project-footer {
-  margin-top: 1.2rem;
-  display: flex;
-  justify-content: flex-end;
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  margin-top: 0;
 }
-  .project-cta {
+ .project-cta {
   opacity: 0;
   transform: translateY(6px);
   transition: all 0.25s ease;
-
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   letter-spacing: 0.08em;
-
-  background: transparent;
+  background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.08);
   color: #8892a4;
-  padding: 0.4rem 0.8rem;
+  padding: 0.35rem 0.75rem;
   cursor: pointer;
+  pointer-events: none;
 }
-  .project-card:hover .project-cta {
+ .project-card:hover .project-cta {
   opacity: 1;
   transform: translateY(0);
   color: #fff;
   border-color: rgba(255,255,255,0.2);
+  pointer-events: auto;
 }
   
 .project-card:hover .project-glow {
