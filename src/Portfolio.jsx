@@ -48,7 +48,8 @@ const PROJECTS = [
     stack: ["React", "PHP", "MySQL"],
     color: "#00e5ff",
     icon: "🏛️",
-    github: "https://github.com/SyJared/digibaranggay"
+    github: "https://github.com/SyJared/digibaranggay",
+    demo: "https://flow-demo-gold.vercel.app",
   },
   {
     title: "Flow",
@@ -681,6 +682,53 @@ const sendEmail = (e) => {
       pointer-events: none;
       transition: opacity 0.3s;
     }
+      .project-github-btn {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+  color: #8892a4;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  backdrop-filter: blur(6px);
+}
+
+.project-github-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.2);
+  color: #fff;
+  background: rgba(255,255,255,0.05);
+}
+  .project-card::after {
+  content: "Open →";
+  position: absolute;
+  bottom: 1.2rem;
+  right: 1.5rem;
+
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.1em;
+
+  opacity: 0;
+  transform: translateY(4px);
+  transition: all 0.3s ease;
+}
+
+.project-card:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}
     .project-card:hover .project-glow { opacity: 0.12; }
 
     /* CONTACT */
@@ -937,7 +985,8 @@ const sendEmail = (e) => {
                 style={{
                   transitionDelay: `${i * 0.15}s`,
                   "--card-color": p.color
-                }}  onClick={() => window.open(p.github, "_blank", "noopener,noreferrer")}
+                }}
+                onClick={() => window.open(p.demo || p.github, "_blank", "noopener,noreferrer")}
               >
                 <div
                   className="project-card"
@@ -952,12 +1001,29 @@ const sendEmail = (e) => {
                 >
                   <div className="project-card-header">
                     <div className="project-icon">{p.icon}</div>
+
                     <div className="project-meta">
-                      <span className="project-tag" style={{ borderColor: `${p.color}44`, color: p.color }}>
+                      <span
+                        className="project-tag"
+                        style={{ borderColor: `${p.color}44`, color: p.color }}
+                      >
                         {p.tag}
                       </span>
+
                       <div className="project-year">{p.year}</div>
                     </div>
+
+                    {/* NEW: GitHub button */}
+                    <button
+                      className="project-github-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(p.github, "_blank", "noopener,noreferrer");
+                      }}
+                      aria-label="Open GitHub"
+                    >
+                      ⟡
+                    </button>
                   </div>
                   <div className="project-title">{p.title}</div>
                   <p className="project-desc">{p.description}</p>
