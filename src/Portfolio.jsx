@@ -896,15 +896,44 @@ const sendEmail = (e) => {
     .footer-copy { font-size: 0.7rem; color: #3a4255; }
 
     @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-      .hero-inner { grid-template-columns: 1fr; }
-      .hero-visual { margin-top: 2rem; }
-      .avatar-frame { width: 200px; height: 200px; }
-      .badge-3 { display: none; }
-      .contact-inner { grid-template-columns: 1fr; }
-      .projects-grid { grid-template-columns: 1fr; }
-      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-visual { margin-top: 2rem; }
+  .avatar-frame { width: 200px; height: 200px; }
+  .badge-3 { display: none; }
+
+  .contact-inner { grid-template-columns: 1fr; }
+
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+    .projects-grid {
+  align-items: start;
+}
+
+
+  .project-card {
+    padding: 1.2rem;
+  }
+
+  .project-footer {
+    margin-top: 1rem;
+  }
+
+  .project-title {
+    font-size: 1.5rem;
+  }
+
+  footer {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}
     }
   `;
 
