@@ -48,8 +48,8 @@ const PROJECTS = [
     stack: ["React", "PHP", "MySQL"],
     color: "#00e5ff",
     icon: "🏛️",
-    github: "https://github.com/SyJared/digibaranggay",
-    demo: "https://flow-demo-gold.vercel.app",
+    github: "https://github.com/SyJared/digibaranggay"
+    
   },
   {
     title: "Flow",
@@ -59,7 +59,8 @@ const PROJECTS = [
     stack: ["React", "Express.js", "Node.js"],
     color: "#a78bfa",
     icon: "⚡",
-    github: "https://github.com/SyJared/flow"
+    github: "https://github.com/SyJared/flow",
+    demo: "https://flow-demo-gold.vercel.app"
   }
 ];
 
