@@ -992,7 +992,7 @@ opacity: 0;
               <div className={`hero-cta${heroInView ? " visible" : ""}`}>
                 <button className="btn-primary" onClick={() => scrollTo("Projects")}>View Projects</button>
                 <button className="btn-secondary" onClick={() => scrollTo("Contact")}>Get in Touch</button>
-                <a href="/resume.docx" download="resume.docx" className="btn-secondary">
+                <a href="/resume.docx" download="resume-new.pdf" className="btn-secondary">
                   Resume
                 </a>
             </div>
