@@ -1128,7 +1128,7 @@ opacity: 0;
   window.open(p.demo || p.github, "_blank", "noopener,noreferrer");
 }}
   >
-    View Demo →
+   {p.demo ? "View Demo →" : "View Code →"}
   </button>
 </div>
   
