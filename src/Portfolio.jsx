@@ -17,19 +17,19 @@ const SKILL_GROUPS = [
     group: "Backend",
     color: "#a78bfa",
     icon: "⚙️",
-    skills: ["Node.js", "Express.js", "REST APIs", "JWT Authentication"],
+    skills: ["Node.js", "Express.js", "REST APIs", "JWT Authentication", "ASP .Net core", "c#"],
   },
   {
     group: "Database",
     color: "#34d399",
     icon: "🗄",
-    skills: ["MySQL", "SQL"],
+    skills: ["MySQL", "SQL", "PostgreSQL"],
   },
   {
     group: "Tools",
     color: "#f59e0b",
     icon: "🛠",
-    skills: ["Git", "GitHub", "Docker(basic)", "Linux(basic)"],
+    skills: ["Git", "GitHub","GitActions", "Docker(basic)", "Linux(basic)"],
   },
   {
     group: "Other",
@@ -61,7 +61,17 @@ const PROJECTS = [
     icon: "⚡",
     github: "https://github.com/SyJared/flow",
     demo: "https://flow-demo-gold.vercel.app"
-  }
+  },{
+    title: "SchoolMIS",
+    tag: "Productivity",
+    year: "2026",
+    description: "The School Management System was developed to simplify classroom administration by providing a centralized platform where administrators, teachers, and students can efficiently manage classes, track attendance, record grades, and access academic information through a secure, role-based web application.",
+    stack: ["React", "C#",".Net", "MySQL"],
+    color: "#1B4EF5",
+    icon: "🏛️",
+    github: "https://github.com/SyJared/SchoolMIS"
+    
+  },
 ];
 
 function useInView(threshold = 0.15) {
