@@ -994,7 +994,7 @@ opacity: 0;
                 Gagaring.
               </h1>
               <div className={`hero-role${heroInView ? " visible" : ""}`}>
-                Aspiring Web Developer &nbsp;·&nbsp; Philippines
+                Aspiring Software Developer &nbsp;·&nbsp; Philippines
               </div>
               <p className={`hero-bio${heroInView ? " visible" : ""}`}>
                 I'm a 22-year-old aspiring web developer eager to launch my career in building things for the web. Through project studies and continuous learning, I've developed a solid foundation across the full stack — and a genuine love for problem solving.
