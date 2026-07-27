@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 
-const API_URL = "https://symlang-api.onrender.com/";
+const API_URL = "https://symlang-api.onrender.com/run";
 
 // Local copy of the same fade-in-on-scroll pattern used elsewhere in the portfolio,
 // so this section reveals itself the same way About/Skills/Projects/Contact do.
@@ -142,9 +142,11 @@ export default function MiniLangPlayground() {
           A tiny programming language I built from scratch in Java — lexer, parser, and
           tree-walking interpreter, no libraries. This runs on a real Spring Boot API
           hitting my actual interpreter. Edit the code and hit run.
+          
         </p>
-
+        
         <div className={`ml-examples${sectionInView ? " visible" : ""}`}>
+          <p className={`ml-blurb${sectionInView ? " visible" : ""}`}>EXAMPLES:</p>
           {Object.keys(EXAMPLES).map((name) => (
             <button
               key={name}
