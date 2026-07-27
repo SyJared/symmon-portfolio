@@ -13,31 +13,65 @@ const SKILL_GROUPS = [
     group: "Frontend",
     color: "#00e5ff",
     icon: "🖥",
-    skills: ["React", "React Router", "JavaScript", "HTML", "CSS"],
+    skills: [
+      "React",
+      "React Router",
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "Vite"
+    ],
   },
   {
     group: "Backend",
     color: "#a78bfa",
     icon: "⚙️",
-    skills: ["Node.js", "Express.js", "REST APIs", "JWT Authentication", "ASP .Net core", "c#"],
+    skills: [
+      "Java",
+      "Spring Boot",
+      "C#",
+      "ASP.NET Core",
+      "Node.js",
+      "Express.js",
+      "REST APIs",
+      "JWT Authentication"
+    ],
   },
   {
     group: "Database",
     color: "#34d399",
     icon: "🗄",
-    skills: ["MySQL", "SQL", "PostgreSQL"],
+    skills: [
+      "MySQL",
+      "PostgreSQL",
+      "SQL"
+    ],
   },
   {
     group: "Tools",
     color: "#f59e0b",
     icon: "🛠",
-    skills: ["Git", "GitHub","GitActions", "Docker(basic)", "Linux(basic)"],
+    skills: [
+      "Git",
+      "GitHub",
+      "GitHub Actions",
+      "Docker",
+      "Linux",
+      "Postman"
+    ],
   },
   {
     group: "Other",
     color: "#f472b6",
     icon: "✦",
-    skills: ["Zod Validation", "bcrypt", "Middleware", "Role-Based Access"],
+    skills: [
+      "Zod Validation",
+      "bcrypt",
+      "Middleware",
+      "Role-Based Access Control",
+      "Object-Oriented Programming",
+      "Compiler Design (Lexer, Parser, AST, Interpreter)"
+    ],
   },
 ];
 
@@ -46,7 +80,8 @@ const PROJECTS = [
     title: "DigiBarangay",
     tag: "Civic Tech",
     year: "2025",
-    description: "A platform that streamlines barangay services — featuring a community bulletin board, real-time notifications, online document request system, and improved management of community records.",
+    description:
+  "A digital barangay management platform that streamlines community services through online document requests, announcements, notifications, and resident record management.",
     stack: ["React", "PHP", "MySQL"],
     color: "#00e5ff",
     icon: "🏛️",
@@ -57,7 +92,8 @@ const PROJECTS = [
     title: "Flow",
     tag: "Productivity",
     year: "2026",
-    description: "An online web-based workspace built for any kind of work. Offers multiple workspaces and task boards, where each task can be assigned to a specific team member.",
+    description:
+  "A collaborative workspace inspired by Jira and Trello. Supports multiple workspaces, task boards, role-based access, task assignments, authentication, and team collaboration through a responsive web application.",
     stack: ["React", "Express.js", "Node.js"],
     color: "#a78bfa",
     icon: "⚡",
@@ -67,13 +103,29 @@ const PROJECTS = [
     title: "SchoolMIS",
     tag: "Productivity",
     year: "2026",
-    description: "The School Management System was developed to simplify classroom administration by providing a centralized platform where administrators, teachers, and students can efficiently manage classes, track attendance, record grades, and access academic information through a secure, role-based web application.",
+    description:
+  "A role-based School Management Information System that enables administrators and teachers to manage classrooms, students, attendance, and grades through a centralized web application built with ASP.NET Core and React.",
     stack: ["React", "C#",".Net", "MySQL"],
     color: "#1B4EF5",
     icon: "🏛️",
     github: "https://github.com/SyJared/SchoolMIS"
     
-  },
+  },{
+  title: "SymLang",
+  tag: "Programming Language",
+  year: "2026",
+  description:
+    "A custom interpreted programming language built in Java featuring a lexer, recursive-descent parser, Abstract Syntax Tree (AST), and interpreter. Integrated with a Spring Boot REST API and deployed backend, allowing users to execute SymLang code directly from my portfolio. You can see the live demo below ↓",
+  stack: [
+    "Java",
+    "Spring Boot",
+    "Docker",
+    "REST API"
+  ],
+  color: "#ff6b35",
+  icon: "💻",
+  github: "https://github.com/SyJared/symlang-api"
+},
 ];
 
 function useInView(threshold = 0.15) {
