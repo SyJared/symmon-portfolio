@@ -2,9 +2,10 @@ import { useState, useEffect, useRef } from "react";
 import './index.css'
 import me from '/me.png'
 import emailjs from "@emailjs/browser";
+import MiniLangPlayground from "./backend/MiniLangPlayground";
 
 
-const NAV_LINKS = ["About", "Skills", "Projects", "Contact"];
+const NAV_LINKS = ["About", "Skills", "Projects", "Playground", "Contact"];
 
 const SKILL_GROUPS = [
   {
@@ -1140,8 +1141,9 @@ opacity: 0;
   >
    {p.demo ? "View Demo →" : "View Code →"}
   </button>
+
 </div>
-  
+    
 
   <div className="project-glow" style={{ background: p.color }} />
 
@@ -1164,7 +1166,7 @@ opacity: 0;
           </div>
         </div>
       </section>
-
+<MiniLangPlayground />
       {/* CONTACT */}
       <section id="contact" ref={contactRef}>
         <div className="section-wrap">
