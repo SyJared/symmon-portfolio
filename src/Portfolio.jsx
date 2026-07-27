@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import './index.css'
 import me from '/me.png'
 import emailjs from "@emailjs/browser";
-import MiniLangPlayground from "./backend/MiniLangPlayground";
+import MinilangPlayground from "./backend/MinilangPlayground";
 
 
 
@@ -1167,7 +1167,7 @@ opacity: 0;
           </div>
         </div>
       </section>
-<MiniLangPlayground />
+<MinilangPlayground />
       {/* CONTACT */}
       <section id="contact" ref={contactRef}>
         <div className="section-wrap">

@@ -61,7 +61,7 @@ print("length is", length(greeting));`,
 
 const DEFAULT_EXAMPLE = "Recursion";
 
-export default function MiniLangPlayground() {
+export default function MinilangPlayground() {
   const [code, setCode] = useState(EXAMPLES[DEFAULT_EXAMPLE]);
   const [result, setResult] = useState({ output: [], error: null });
   const [running, setRunning] = useState(false);
