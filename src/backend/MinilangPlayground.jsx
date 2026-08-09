@@ -136,7 +136,7 @@ export default function MinilangPlayground() {
       <div className="section-wrap">
         <div className={`section-label${sectionInView ? " visible" : ""}`}>◆ Live Demo</div>
         <div className={`section-title${sectionInView ? " visible" : ""}`}>
-          MiniLang<br /><span className="dim">Playground.</span>
+          SymLang<br /><span className="dim">Playground.</span>
         </div>
         <p className={`ml-blurb${sectionInView ? " visible" : ""}`}>
           A tiny programming language I built from scratch in Java — lexer, parser, and

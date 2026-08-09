@@ -16,7 +16,10 @@ const SKILL_GROUPS = [
     skills: [
       "React",
       "React Router",
+      "React Native",
+      "Expo",
       "JavaScript",
+      "TypeScript",
       "HTML",
       "CSS",
       "Vite"
@@ -34,6 +37,7 @@ const SKILL_GROUPS = [
       "Node.js",
       "Express.js",
       "REST APIs",
+      "WebSockets",
       "JWT Authentication"
     ],
   },
@@ -57,6 +61,8 @@ const SKILL_GROUPS = [
       "GitHub Actions",
       "Docker",
       "Linux",
+      "Tailscale",
+      "EAS Build",
       "Postman"
     ],
   },
@@ -67,6 +73,7 @@ const SKILL_GROUPS = [
     skills: [
       "Zod Validation",
       "bcrypt",
+      "API Key Authentication",
       "Middleware",
       "Role-Based Access Control",
       "Object-Oriented Programming",
@@ -76,6 +83,17 @@ const SKILL_GROUPS = [
 ];
 
 const PROJECTS = [
+  {
+    title: "SymMoni",
+    tag: "Systems / Mobile",
+    year: "2026",
+    description:
+  "A cross-platform laptop monitoring system pairing a Spring Boot + OSHI backend with a React Native mobile app. Streams live CPU, memory, disk, network, and battery stats over WebSockets, supports remote process management, and is secured with custom API-key authentication and Tailscale for access from anywhere.",
+    stack: ["React Native", "Spring Boot", "OSHI", "WebSockets", "Tailscale"],
+    color: "#22c55e",
+    icon: "📡",
+    github: "https://github.com/SyJared/symMoni"
+  },
   {
     title: "DigiBarangay",
     tag: "Civic Tech",
