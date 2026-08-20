@@ -52,6 +52,21 @@ const SKILL_GROUPS = [
     ],
   },
   {
+    group: "AI / LLM Engineering",
+    color: "#d4e157",
+    icon: "🧠",
+    skills: [
+      "RAG (Retrieval-Augmented Generation)",
+      "LLM APIs (Claude, Gemini)",
+      "Prompt Engineering",
+      "Vector Embeddings",
+      "pgvector",
+      "Semantic Search",
+      "Structured Outputs",
+      "Hallucination Mitigation"
+    ],
+  },
+  {
     group: "Tools",
     color: "#f59e0b",
     icon: "🛠",
@@ -84,6 +99,17 @@ const SKILL_GROUPS = [
 
 const PROJECTS = [
   {
+    title: "SymDoc",
+    tag: "AI / RAG",
+    year: "2026",
+    description:
+  "A full-stack Retrieval-Augmented Generation app that lets you upload documents and ask questions answered strictly from their content. Chunks and embeds documents with Voyage AI, stores vectors in PostgreSQL via pgvector, and generates answers with Gemini constrained to a structured JSON schema. A custom grounding layer verifies every cited quote against the retrieved source text before it's shown, so answers come with a code-checked trust signal — not just the model's own confidence.",
+    stack: ["React", "Node.js", "Express.js", "PostgreSQL", "pgvector", "Voyage AI", "Gemini API"],
+    color: "#d4e157",
+    icon: "🧠",
+    github: "https://github.com/SyJared/SymDoc"
+  },
+  {
     title: "SymMoni",
     tag: "Systems / Mobile",
     year: "2026",
@@ -92,7 +118,7 @@ const PROJECTS = [
     stack: ["React Native", "Spring Boot", "OSHI", "WebSockets", "Tailscale"],
     color: "#22c55e",
     icon: "📡",
-    github: "https://github.com/SyJared/symMoni"
+    github: "https://github.com/SyJared/SymMoni"
   },
   {
     title: "DigiBarangay",
