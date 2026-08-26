@@ -52,6 +52,15 @@ const SKILL_GROUPS = [
     ],
   },
   {
+    group: "Cloud",
+    color: "#27F5E0",
+    icon: "☁️",
+    skills: [
+      "AWS (EC2, S3, Aurora)",
+      "Azure (App Service, Container Apps)",
+    ],
+  },
+  {
     group: "AI / LLM Engineering",
     color: "#d4e157",
     icon: "🧠",
