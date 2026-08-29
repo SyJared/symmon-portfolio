@@ -116,7 +116,8 @@ const PROJECTS = [
     stack: ["React", "Node.js", "Express.js", "PostgreSQL", "pgvector", "Voyage AI", "Gemini API"],
     color: "#d4e157",
     icon: "🧠",
-    github: "https://github.com/SyJared/SymDoc"
+    github: "https://github.com/SyJared/SymDoc",
+    demo: "https://sym-doc-tau.vercel.app"
   },
   {
     title: "SymMoni",
