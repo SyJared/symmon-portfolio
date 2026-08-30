@@ -3,6 +3,16 @@ import './index.css'
 import me from '/me.png'
 import emailjs from "@emailjs/browser";
 import MinilangPlayground from "./backend/MinilangPlayground";
+import ProjectsSlider from "./projectsSlider";
+import symdocd from "/symdocd.png";
+import symdocq from "/symdocq.png";
+import symmonidash from "/symmonidash.png";
+import symmonibat from "/symmonibat.png";
+import symmoniproc from "/symmoniproc.png";
+import flowdash from "/flowdash.png";
+import flowinwork from "/flowinwork.png";
+import flowworkspace from "/flowworkspace.png";
+import flowtask from "/flowtask.png";
 
 
 
@@ -108,78 +118,89 @@ const SKILL_GROUPS = [
 
 const PROJECTS = [
   {
+    id: "symdoc",
     title: "SymDoc",
     tag: "AI / RAG",
     year: "2026",
-    description:
-  "A full-stack Retrieval-Augmented Generation app that lets you upload documents and ask questions answered strictly from their content. Chunks and embeds documents with Voyage AI, stores vectors in PostgreSQL via pgvector, and generates answers with Gemini constrained to a structured JSON schema. A custom grounding layer verifies every cited quote against the retrieved source text before it's shown, so answers come with a code-checked trust signal — not just the model's own confidence.",
-    stack: ["React", "Node.js", "Express.js", "PostgreSQL", "pgvector", "Voyage AI", "Gemini API"],
-    color: "#ff5a36",
     icon: "🧠",
+    description:
+      "A full-stack Retrieval-Augmented Generation app that lets you upload documents and ask questions answered strictly from their content. Chunks and embeds documents with Voyage AI, stores vectors in PostgreSQL via pgvector, and generates answers with Gemini constrained to a structured JSON schema. A custom grounding layer verifies every cited quote against the retrieved source text before it's shown, so answers come with a code-checked trust signal — not just the model's own confidence.",
+    stack: ["React", "Node.js", "Express.js", "PostgreSQL", "pgvector", "Voyage AI", "Gemini API"],
+    screenshots: [symdocd, symdocq],
+    demo: "https://sym-doc-tau.vercel.app",
     github: "https://github.com/SyJared/SymDoc",
-    demo: "https://sym-doc-tau.vercel.app"
+    color: "#ff5a36",
   },
   {
+    id: "symmoni",
     title: "SymMoni",
     tag: "Systems / Mobile",
     year: "2026",
-    description:
-  "A cross-platform laptop monitoring system pairing a Spring Boot + OSHI backend with a React Native mobile app. Streams live CPU, memory, disk, network, and battery stats over WebSockets, supports remote process management, and is secured with custom API-key authentication and Tailscale for access from anywhere.",
-    stack: ["React Native", "Spring Boot", "OSHI", "WebSockets", "Tailscale"],
-    color: "#8fcbff",
     icon: "📡",
-    github: "https://github.com/SyJared/SymMoni"
-  },
-  {
-    title: "DigiBarangay",
-    tag: "Civic Tech",
-    year: "2025",
     description:
-  "A digital barangay management platform that streamlines community services through online document requests, announcements, notifications, and resident record management.",
-    stack: ["React", "PHP", "MySQL"],
-    color: "#5fa8e8",
-    icon: "🏛️",
-    github: "https://github.com/SyJared/digibaranggay"
-    
+      "A cross-platform laptop monitoring system pairing a Spring Boot + OSHI backend with a React Native mobile app. Streams live CPU, memory, disk, network, and battery stats over WebSockets, supports remote process management, and is secured with custom API-key authentication and Tailscale for access from anywhere.",
+    stack: ["React Native", "Spring Boot", "OSHI", "WebSockets", "Tailscale"],
+    screenshots: [symmonidash, symmonibat, symmoniproc],
+    demo: "",
+    github: "https://github.com/SyJared/SymMoni",
+    color: "#8fcbff",
   },
   {
+    id: "flow",
     title: "Flow",
     tag: "Productivity",
     year: "2026",
-    description:
-  "A collaborative workspace inspired by Jira and Trello. Supports multiple workspaces, task boards, role-based access, task assignments, authentication, and team collaboration through a responsive web application.",
-    stack: ["React", "Express.js", "Node.js"],
-    color: "#3d7fc4",
     icon: "⚡",
+    description:
+      "A collaborative workspace inspired by Jira and Trello. Supports multiple workspaces, task boards, role-based access, task assignments, authentication, and team collaboration through a responsive web application.",
+    stack: ["React", "Express.js", "Node.js"],
+    screenshots: [flowdash, flowinwork, flowworkspace, flowtask],
+    demo: "https://flow-demo-gold.vercel.app",
     github: "https://github.com/SyJared/flow",
-    demo: "https://flow-demo-gold.vercel.app"
-  },{
+    color: "#3d7fc4",
+  },
+  {
+    id: "schoolmis",
     title: "SchoolMIS",
     tag: "Productivity",
     year: "2026",
-    description:
-  "A role-based School Management Information System that enables administrators and teachers to manage classrooms, students, attendance, and grades through a centralized web application built with ASP.NET Core and React.",
-    stack: ["React", "C#",".Net", "MySQL"],
-    color: "#bfe4ff",
     icon: "🏛️",
-    github: "https://github.com/SyJared/SchoolMIS"
-    
-  },{
-  title: "SymLang",
-  tag: "Programming Language",
-  year: "2026",
-  description:
-    "A custom interpreted programming language built in Java featuring a lexer, recursive-descent parser, Abstract Syntax Tree (AST), and interpreter. Integrated with a Spring Boot REST API and deployed backend, allowing users to execute SymLang code directly from my portfolio. You can see the live demo below ↓",
-  stack: [
-    "Java",
-    "Spring Boot",
-    "Docker",
-    "REST API"
-  ],
-  color: "#ffb020",
-  icon: "💻",
-  github: "https://github.com/SyJared/symlang-api"
-},
+    description:
+      "A role-based School Management Information System that enables administrators and teachers to manage classrooms, students, attendance, and grades through a centralized web application built with ASP.NET Core and React.",
+    stack: ["React", "C#", "ASP.NET Core", "PostgreSQL"],
+    screenshots: [],
+    demo: "",
+    github: "https://github.com/SyJared/SchoolMIS",
+    color: "#bfe4ff",
+  },
+  {
+    id: "digibarangay",
+    title: "DigiBarangay",
+    tag: "Civic Tech",
+    year: "2025",
+    icon: "🏛️",
+    description:
+      "A digital barangay management platform that streamlines community services through online document requests, announcements, notifications, and resident record management.",
+    stack: ["React", "PHP", "MySQL"],
+    screenshots: [],
+    demo: "",
+    github: "https://github.com/SyJared/digibaranggay",
+    color: "#5fa8e8",
+  },
+  {
+    id: "symlang",
+    title: "SymLang",
+    tag: "Programming Language",
+    year: "2026",
+    icon: "💻",
+    description:
+      "A custom interpreted programming language built in Java featuring a lexer, recursive-descent parser, Abstract Syntax Tree (AST), and interpreter. Integrated with a Spring Boot REST API and deployed backend, allowing users to execute SymLang code directly from my portfolio. You can see the live demo below ↓",
+    stack: ["Java", "Spring Boot", "Docker", "REST API"],
+    screenshots: [],
+    demo: "",
+    github: "https://github.com/SyJared/symlang-api",
+    color: "#ffb020",
+  },
 ];
 
 function useInView(threshold = 0.15) {
@@ -1081,6 +1102,346 @@ const sendEmail = (e) => {
     }
     .footer-copy { font-size: 0.7rem; color: #3d5a80; }
 
+    /* ============================================================
+   PROJECTS SLIDER — add this block to your existing <style> string
+   ============================================================ */
+
+.projects-slide-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.projects-slide-glow {
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+  transition: background 0.5s ease;
+}
+
+.projects-slide-wrap {
+  position: relative;
+  z-index: 1;
+}
+
+.project-slide-counter {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: #3d5a80;
+  margin-bottom: 1.5rem;
+}
+
+.project-slide-content {
+  border: 1px solid rgba(143,203,255,0.14);
+  background: rgba(15,42,82,0.4);
+  padding: 2rem;
+  position: relative;
+  animation: slideFade 0.4s ease;
+}
+
+@keyframes slideFade {
+  from { opacity: 0; transform: translateX(16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* This markup reuses .project-card-header/.project-tag/.project-github-btn
+   etc. from the old grid-card CSS, but here they sit inside a normal flex
+   row rather than an absolutely-positioned overlay -- these overrides
+   neutralize the old absolute/hover-hidden behavior specifically inside
+   the slider so they render as plain, always-visible flex items instead. */
+.project-slide-content .project-github-btn {
+  position: static;
+  transform: none;
+  margin-left: auto;
+}
+
+.project-slide-content .project-tag {
+  margin-right: 0;
+}
+
+.project-slide-content .project-cta {
+  opacity: 1;
+  transform: none;
+  position: static;
+  pointer-events: auto;
+}
+
+.project-slide-content .project-footer {
+  position: static;
+  margin-top: 1.5rem;
+}
+
+.project-slide-title {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: #fff;
+  margin: 0.75rem 0 1rem;
+}
+
+.project-slide-desc {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: #a3b8d4;
+  max-width: 640px;
+  margin-bottom: 1.25rem;
+}
+
+/* Two columns when screenshots exist: info on the left, a vertically
+   scrollable screenshot stack on the right. With no screenshots,
+   .has-media is never added, so this stays a single flowing column --
+   unchanged from before. */
+.project-slide-body.has-media {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
+  gap: 2rem;
+  align-items: start;
+}
+
+.project-slide-info {
+  min-width: 0;
+}
+
+.project-slide-screenshots {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 480px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.project-slide-screenshot {
+  flex: 0 0 auto;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border: 1px solid rgba(143,203,255,0.18);
+  overflow: hidden;
+  background: #0a1f3d;
+  position: relative;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.project-slide-screenshot:hover {
+  border-color: rgba(143,203,255,0.5);
+}
+
+.project-slide-screenshot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.project-slide-screenshot:hover img {
+  transform: scale(1.04);
+}
+
+.screenshot-zoom-hint {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10,31,61,0.85);
+  border: 1px solid rgba(143,203,255,0.3);
+  color: #8fcbff;
+  font-size: 0.85rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.project-slide-screenshot:hover .screenshot-zoom-hint {
+  opacity: 1;
+}
+
+/* LIGHTBOX MODAL */
+.screenshot-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(6,16,32,0.94);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+  animation: modalFadeIn 0.2s ease;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.screenshot-modal-img {
+  max-width: 85vw;
+  max-height: 82vh;
+  object-fit: contain;
+  border: 1px solid rgba(143,203,255,0.25);
+  cursor: default;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.screenshot-modal-close {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid rgba(143,203,255,0.25);
+  color: #eaf3ff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.screenshot-modal-close:hover {
+  border-color: #ff5a36;
+  color: #ff5a36;
+  transform: rotate(90deg);
+}
+
+.screenshot-modal-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10,31,61,0.7);
+  border: 1px solid rgba(143,203,255,0.25);
+  color: #eaf3ff;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.screenshot-modal-arrow:hover {
+  border-color: #8fcbff;
+  background: rgba(18,58,107,0.8);
+}
+
+.screenshot-modal-arrow.left { left: 24px; }
+.screenshot-modal-arrow.right { right: 24px; }
+
+.screenshot-modal-counter {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: #7691b8;
+  background: rgba(10,31,61,0.7);
+  border: 1px solid rgba(143,203,255,0.16);
+  padding: 0.4rem 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .screenshot-modal-arrow { width: 40px; height: 40px; font-size: 1.3rem; }
+  .screenshot-modal-arrow.left { left: 10px; }
+  .screenshot-modal-arrow.right { right: 10px; }
+  .screenshot-modal-close { top: 14px; right: 14px; }
+}
+
+@media (max-width: 900px) {
+  .project-slide-body.has-media {
+    grid-template-columns: 1fr;
+  }
+  .project-slide-screenshots {
+    flex-direction: row;
+    max-height: none;
+    overflow-x: auto;
+    overflow-y: visible;
+  }
+  .project-slide-screenshot {
+    width: 240px;
+  }
+}
+
+.project-slide-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.project-slide-arrow {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(143,203,255,0.2);
+  background: transparent;
+  color: #8fcbff;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.project-slide-arrow:hover {
+  border-color: #8fcbff;
+  background: rgba(143,203,255,0.08);
+  transform: scale(1.05);
+}
+
+.project-slide-dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.project-slide-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid rgba(143,203,255,0.3);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+
+.project-slide-dot:hover {
+  border-color: #8fcbff;
+  transform: scale(1.2);
+}
+
+.project-slide-dot.active {
+  border-color: transparent;
+  transform: scale(1.3);
+}
+
+@media (max-width: 768px) {
+  .project-slide-content { padding: 1.25rem; }
+  .project-slide-screenshot { width: 240px; }
+}
+
+
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .hamburger { display: flex; }
@@ -1140,7 +1501,7 @@ const sendEmail = (e) => {
                 Gagaring.
               </h1>
               <div className={`hero-role${heroInView ? " visible" : ""}`}>
-                Aspiring Software Engineer / AI Engineer &nbsp;·&nbsp; Philippines
+                Aspiring Software Developer &nbsp;·&nbsp; Philippines
               </div>
               <p className={`hero-bio${heroInView ? " visible" : ""}`}>
                 I'm a 22-year-old aspiring web developer eager to launch my career in building things for the web. Through project studies and continuous learning, I've developed a solid foundation across the full stack — and a genuine love for problem solving.
@@ -1171,7 +1532,7 @@ const sendEmail = (e) => {
       {/* SKILLS */}
       <section id="skills" ref={skillsRef}>
         <div className="section-wrap">
-          <div className={`section-label${skillsInView ? " visible" : ""}`}> Capabilities</div>
+          <div className={`section-label${skillsInView ? " visible" : ""}`}>02 — Capabilities</div>
           <div className={`section-title${skillsInView ? " visible" : ""}`}>
             Tech<br /><span className="dim">Stack.</span>
           </div>
@@ -1227,95 +1588,12 @@ const sendEmail = (e) => {
       </section>
 
       {/* PROJECTS */}
-      <section id="projects" ref={projectsRef}>
-        <div className="section-wrap">
-          <div className={`section-label${projectsInView ? " visible" : ""}`}>Work</div>
-          <div className={`section-title${projectsInView ? " visible" : ""}`}>
-            Featured<br /><span className="dim">Projects.</span>
-          </div>
-          <div className="projects-grid">
-        {PROJECTS.map((p, i) => (
-          <div className={`project-card${projectsInView ? " visible" : ""}`}
-            style={{
-              transitionDelay: `${i * 0.15}s`,
-              "--card-color": p.color
-            }}
-          >
-  <div className="project-card-header">
-    <div className="project-icon">{p.icon}</div>
-
-    <div className="project-meta">
-      <span
-        className="project-tag"
-        style={{ borderColor: `${p.color}44`, color: p.color }}
-      >
-        {p.tag}
-      </span>
-
-      <div className="project-year">{p.year}</div>
-    </div>
-
-    <button
-      className="project-github-btn"
-      onClick={(e) => {
-        e.stopPropagation();
-        window.open(p.github, "_blank", "noopener,noreferrer");
-      }}
-      aria-label="Open GitHub"
-    >
-      ⟡
-    </button>
-  </div>
-
-  <div className="project-title">{p.title}</div>
-  <p className="project-desc">{p.description}</p>
-
- <div className="project-stack">
-  {p.stack.map((t) => (
-    <span key={t} className="stack-tag">{t}</span>
-  ))}
-</div>
-
-<div className="project-footer">
-  <button
-    className="project-cta"
-    onClick={(e) => {
-  e.stopPropagation();
-  window.open(p.demo || p.github, "_blank", "noopener,noreferrer");
-}}
-  >
-   {p.demo ? "View Demo →" : "View Code →"}
-  </button>
-
-</div>
-    
-
-  <div className="project-glow" style={{ background: p.color }} />
-
-  <div
-    className="card-line"
-    style={{
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      height: "2px",
-      background: `linear-gradient(90deg, ${p.color}, transparent)`,
-      opacity: 0,
-      transition: "opacity 0.3s"
-    }}
-  />
- 
-</div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ProjectsSlider PROJECTS={PROJECTS} projectsRef={projectsRef} projectsInView={projectsInView} />
 <MinilangPlayground />
       {/* CONTACT */}
       <section id="contact" ref={contactRef}>
         <div className="section-wrap">
-          <div className={`section-label${contactInView ? " visible" : ""}`}>Connect</div>
+          <div className={`section-label${contactInView ? " visible" : ""}`}>04 — Connect</div>
           <div className={`section-title${contactInView ? " visible" : ""}`}>
             Let's<br /><span className="dim">Talk.</span>
           </div>
