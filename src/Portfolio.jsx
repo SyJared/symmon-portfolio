@@ -3,7 +3,8 @@ import './index.css'
 import me from '/me.png'
 import emailjs from "@emailjs/browser";
 import MinilangPlayground from "./backend/MinilangPlayground";
-import ProjectsSlider from "./projectsSlider";
+import ProjectsSlider from "./ProjectsSlider";
+import RoleRotator from "./roleRotator";
 import symdocd from "/symdocd.png";
 import symdocq from "/symdocq.png";
 import symmonidash from "/symmonidash.png";
@@ -130,6 +131,24 @@ const PROJECTS = [
     demo: "https://sym-doc-tau.vercel.app",
     github: "https://github.com/SyJared/SymDoc",
     color: "#ff5a36",
+    buildNotes: [
+      {
+        issue: "Vector search silently returned zero results despite matching data clearly existing in the table.",
+        fix: "Isolated the bug by testing the plain SQL JOIN with no vector logic first — it worked. Traced it to the pgvector ivfflat index, which clusters vectors into buckets for speed but needs real data volume to route queries correctly; with only a handful of rows, it was searching an empty bucket. Removed the index for this scale — an exact scan is both faster and more accurate below a few thousand rows.",
+      },
+      {
+        issue: "Backend crashed on startup with 'Cannot find module' and 'Unexpected token export' errors.",
+        fix: "Root cause was mixing CommonJS (require/module.exports) and ES Modules (import/export) across different service files. Standardized the entire backend on CommonJS and used Node's own stack trace to find each mismatched file one by one.",
+      },
+      {
+        issue: "Database connection failed with 'password authentication failed' even with the correct password.",
+        fix: "A natively-installed Postgres service was silently occupying the default port, intercepting connections meant for a separate Dockerized Postgres+pgvector instance. Remapped the Docker container to a different port instead of touching either service's config.",
+      },
+      {
+        issue: "Insert failed with 'expected 512 dimensions, not 1024' after switching embedding models.",
+        fix: "The database schema was hard-coded for the previous model's output size. Updated the vector column to match the new model's actual dimension, and now treat embedding dimension as an explicit, checked assumption rather than a magic number.",
+      },
+    ],
   },
   {
     id: "symmoni",
@@ -541,6 +560,96 @@ const sendEmail = (e) => {
       transition: all 0.8s ease 0.2s;
     }
     .hero-role.visible { opacity: 1; transform: translateY(0); }
+
+    .hero-role {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-role-prefix {
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      color: #7691b8;
+    }
+
+    /* Standard visually-hidden-but-accessible utility -- content is
+       present for screen readers, invisible and non-disruptive for
+       sighted users. */
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .role-rotator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    /* Real <button>, so it's keyboard-focusable and semantically a
+       control, not just decorative text -- but visually it should read
+       as emphasized text, not as a boxed UI button. */
+    .role-rotator-track {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4em;
+      background: none;
+      border: none;
+      border-bottom: 1px dashed rgba(255,90,54,0.4);
+      padding: 0 0 2px;
+      cursor: pointer;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: #ff5a36;
+      animation: roleRotateIn 0.4s ease;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .role-rotator-track:hover {
+      color: #ff7a5c;
+      border-bottom-color: #ff7a5c;
+    }
+
+    .role-rotator-track:focus-visible {
+      outline: 1px solid #ff5a36;
+      outline-offset: 3px;
+    }
+
+    @keyframes roleRotateIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .role-rotator-icon {
+      font-size: 0.9em;
+    }
+
+    .role-rotator-dots {
+      display: inline-flex;
+      gap: 0.3rem;
+    }
+
+    .role-rotator-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(143,203,255,0.2);
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .role-rotator-dot.active {
+      background: #ff5a36;
+      transform: scale(1.3);
+    }
 
     .hero-bio {
       font-size: 0.88rem;
@@ -1211,6 +1320,120 @@ const sendEmail = (e) => {
   min-width: 0;
 }
 
+/* BUILD NOTES: styled like a technical drawing's revision/annotation
+   log -- numbered entries, ISSUE/FIX labeled rows, redline for the
+   problem and blueprint-blue for the resolution. */
+.build-notes {
+  margin-top: 1.1rem;
+}
+
+.build-notes-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8fcbff;
+  transition: color 0.2s ease;
+}
+
+.build-notes-toggle:hover {
+  color: #bfe4ff;
+}
+
+.build-notes-chevron {
+  display: inline-block;
+  font-size: 0.7rem;
+  transition: transform 0.2s ease;
+}
+
+.build-notes-chevron.open {
+  transform: rotate(90deg);
+}
+
+.build-notes-count {
+  font-size: 0.62rem;
+  color: #3d5a80;
+  border: 1px solid rgba(143,203,255,0.25);
+  padding: 0.1rem 0.4rem;
+}
+
+.build-notes-list {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: notesExpand 0.25s ease;
+}
+
+@keyframes notesExpand {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.build-note {
+  display: flex;
+  gap: 0.9rem;
+  border-left: 2px solid rgba(143,203,255,0.18);
+  padding-left: 0.9rem;
+}
+
+.build-note-index {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  color: #3d5a80;
+  flex-shrink: 0;
+  padding-top: 0.1rem;
+}
+
+.build-note-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.build-note-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+}
+
+.build-note-row p {
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: #a3b8d4;
+  margin: 0;
+}
+
+.build-note-label {
+  flex-shrink: 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid;
+  align-self: flex-start;
+  margin-top: 0.15rem;
+}
+
+.build-note-label.issue {
+  color: #ff5a36;
+  border-color: rgba(255,90,54,0.35);
+}
+
+.build-note-label.fix {
+  color: #8fcbff;
+  border-color: rgba(143,203,255,0.3);
+}
+
 .project-slide-screenshots {
   display: flex;
   flex-direction: column;
@@ -1493,7 +1716,7 @@ const sendEmail = (e) => {
           <div className="hero-inner">
             <div>
               <div className={`hero-label${heroInView ? " visible" : ""}`}>
-                ◆ Available for hire
+                ◆ Available for hire &nbsp;·&nbsp; Philippines
               </div>
               <h1 className={`hero-name${heroInView ? " visible" : ""}`}>
                 Symmon Jared<br />
@@ -1501,10 +1724,11 @@ const sendEmail = (e) => {
                 Gagaring.
               </h1>
               <div className={`hero-role${heroInView ? " visible" : ""}`}>
-                Aspiring Software Developer &nbsp;·&nbsp; Philippines
+                <span className="hero-role-prefix">and I can be a</span>
+                <RoleRotator />
               </div>
               <p className={`hero-bio${heroInView ? " visible" : ""}`}>
-                I'm a 22-year-old aspiring web developer eager to launch my career in building things for the web. Through project studies and continuous learning, I've developed a solid foundation across the full stack — and a genuine love for problem solving.
+                I build across the full stack — from React and Node.js web apps to React Native mobile applications, with ASP.NET Core and Spring Boot in my toolkit. Recently, I've been diving into AI engineering, exploring embeddings, semantic search, LLM prompt design, and grounding techniques. I enjoy understanding systems from the ground up and am continuously expanding my skills across cloud, backend architecture, and AI.
               </p>
               <div className={`hero-cta${heroInView ? " visible" : ""}`}>
                 <button className="btn-primary" onClick={() => scrollTo("Projects")}>View Projects</button>
@@ -1532,7 +1756,7 @@ const sendEmail = (e) => {
       {/* SKILLS */}
       <section id="skills" ref={skillsRef}>
         <div className="section-wrap">
-          <div className={`section-label${skillsInView ? " visible" : ""}`}>02 — Capabilities</div>
+          <div className={`section-label${skillsInView ? " visible" : ""}`}>Capabilities</div>
           <div className={`section-title${skillsInView ? " visible" : ""}`}>
             Tech<br /><span className="dim">Stack.</span>
           </div>
@@ -1593,7 +1817,7 @@ const sendEmail = (e) => {
       {/* CONTACT */}
       <section id="contact" ref={contactRef}>
         <div className="section-wrap">
-          <div className={`section-label${contactInView ? " visible" : ""}`}>04 — Connect</div>
+          <div className={`section-label${contactInView ? " visible" : ""}`}>Connect</div>
           <div className={`section-title${contactInView ? " visible" : ""}`}>
             Let's<br /><span className="dim">Talk.</span>
           </div>

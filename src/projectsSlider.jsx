@@ -3,7 +3,8 @@ import { createPortal } from "react-dom";
 
 function ProjectsSlider({ PROJECTS, projectsRef, projectsInView }) {
     const [current, setCurrent] = useState(0);
-    const [modalIndex, setModalIndex] = useState(null); // null = closed, else index into current project's screenshots
+    const [modalIndex, setModalIndex] = useState(null);
+    const [notesOpen, setNotesOpen] = useState(false);
 
     const goNext = () => setCurrent((prev) => (prev + 1) % PROJECTS.length);
     const goPrev = () => setCurrent((prev) => (prev - 1 + PROJECTS.length) % PROJECTS.length);
@@ -17,6 +18,7 @@ function ProjectsSlider({ PROJECTS, projectsRef, projectsInView }) {
 
     useEffect(() => {
         setModalIndex(null);
+        setNotesOpen(false);
     }, [current]);
 
     useEffect(() => {
@@ -83,6 +85,40 @@ function ProjectsSlider({ PROJECTS, projectsRef, projectsInView }) {
                                     <span key={t} className="stack-tag">{t}</span>
                                 ))}
                             </div>
+
+                            {p.buildNotes?.length > 0 && (
+                                <div className="build-notes">
+                                    <button
+                                        className="build-notes-toggle"
+                                        onClick={() => setNotesOpen((o) => !o)}
+                                        aria-expanded={notesOpen}
+                                    >
+                                        <span className={`build-notes-chevron${notesOpen ? " open" : ""}`}>▸</span>
+                                        Build Notes
+                                        <span className="build-notes-count">{p.buildNotes.length}</span>
+                                    </button>
+
+                                    {notesOpen && (
+                                        <div className="build-notes-list">
+                                            {p.buildNotes.map((note, i) => (
+                                                <div className="build-note" key={i}>
+                                                    <div className="build-note-index">{String(i + 1).padStart(2, "0")}</div>
+                                                    <div className="build-note-body">
+                                                        <div className="build-note-row">
+                                                            <span className="build-note-label issue">Issue</span>
+                                                            <p>{note.issue}</p>
+                                                        </div>
+                                                        <div className="build-note-row">
+                                                            <span className="build-note-label fix">Fix</span>
+                                                            <p>{note.fix}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            )}
 
                             <div className="project-footer">
                                 <button
