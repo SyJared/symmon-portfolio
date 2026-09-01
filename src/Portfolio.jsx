@@ -3,7 +3,7 @@ import './index.css'
 import me from '/me.png'
 import emailjs from "@emailjs/browser";
 import MinilangPlayground from "./backend/MinilangPlayground";
-import ProjectsSlider from "./ProjectsSlider";
+import ProjectsSlider from "./projectsSlider";
 import RoleRotator from "./roleRotator";
 import symdocd from "/symdocd.png";
 import symdocq from "/symdocq.png";
