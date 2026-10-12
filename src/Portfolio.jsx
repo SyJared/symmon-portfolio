@@ -5,6 +5,7 @@ import emailjs from "@emailjs/browser";
 import MinilangPlayground from "./backend/MinilangPlayground";
 import ProjectsSlider from "./projectsSlider";
 import RoleRotator from "./roleRotator";
+import FreelanceSection from "./freelanceSection";
 import symdocd from "/symdocd.png";
 import symdocq from "/symdocq.png";
 import symmonidash from "/symmonidash.png";
@@ -17,7 +18,7 @@ import flowtask from "/flowtask.png";
 
 
 
-const NAV_LINKS = ["About", "Skills", "Projects", "Playground", "Contact"];
+const NAV_LINKS = ["About", "Skills", "Projects", "Playground", "Freelance", "Contact"];
 
 const SKILL_GROUPS = [
   {
@@ -246,6 +247,7 @@ export default function Portfolio() {
   const [aboutRef, aboutInView] = useInView(0.1);
   const [skillsRef, skillsInView] = useInView(0.1);
   const [projectsRef, projectsInView] = useInView(0.1);
+  const [freelanceRef, freelanceInView] = useInView(0.1);
   const [contactRef, contactInView] = useInView(0.1);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [copied, setCopied] = useState(null);
@@ -1665,6 +1667,114 @@ const sendEmail = (e) => {
 }
 
 
+    /* FREELANCE */
+    #freelance { background: rgba(143,203,255,0.02); }
+    .freelance-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .freelance-intro {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.7s ease 0.2s;
+    }
+    .freelance-intro.visible { opacity: 1; transform: translateY(0); }
+    .freelance-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #8fcbff;
+      border: 1px solid rgba(143,203,255,0.25);
+      background: rgba(10,31,61,0.92);
+      padding: 0.5rem 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+    .freelance-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 0 0 rgba(74,222,128,0.6);
+      animation: freelancePulse 2s infinite;
+    }
+    @keyframes freelancePulse {
+      0% { box-shadow: 0 0 0 0 rgba(74,222,128,0.5); }
+      70% { box-shadow: 0 0 0 8px rgba(74,222,128,0); }
+      100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
+    }
+    .freelance-blurb {
+      font-size: 0.88rem;
+      line-height: 1.8;
+      color: #7691b8;
+      margin-bottom: 1.8rem;
+    }
+    .freelance-details {
+      margin-bottom: 2rem;
+      border-top: 1px solid rgba(143,203,255,0.1);
+    }
+    .freelance-detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(143,203,255,0.1);
+      font-size: 0.75rem;
+    }
+    .freelance-detail-row dt {
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #7691b8;
+    }
+    .freelance-detail-row dd { color: #eaf3ff; text-align: right; }
+    .freelance-services {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .freelance-card {
+      position: relative;
+      padding: 1.4rem;
+      border: 1px solid rgba(143,203,255,0.14);
+      background: rgba(15,42,82,0.5);
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+    }
+    .freelance-card::after {
+      content: '';
+      position: absolute;
+      top: 8px; left: 8px;
+      width: 10px; height: 10px;
+      border-top: 1.5px solid rgba(143,203,255,0.4);
+      border-left: 1.5px solid rgba(143,203,255,0.4);
+      pointer-events: none;
+    }
+    .freelance-card.visible { opacity: 1; transform: translateY(0); }
+    .freelance-card.visible:hover {
+      transform: translateY(-4px);
+      border-color: rgba(143,203,255,0.3);
+      background: rgba(18,58,107,0.6);
+    }
+    .freelance-card-icon { font-size: 1.5rem; display: block; margin-bottom: 0.8rem; }
+    .freelance-card-title {
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .freelance-card-desc { font-size: 0.78rem; line-height: 1.6; color: #7691b8; }
+    @media (prefers-reduced-motion: reduce) {
+      .freelance-dot { animation: none; }
+    }
+
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .hamburger { display: flex; }
@@ -1675,6 +1785,10 @@ const sendEmail = (e) => {
       .badge-3 { display: none; }
 
       .contact-inner { grid-template-columns: 1fr; }
+      .freelance-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+    @media (max-width: 480px) {
+      .freelance-services { grid-template-columns: 1fr; }
     }
   `;
 
@@ -1733,7 +1847,7 @@ const sendEmail = (e) => {
               <div className={`hero-cta${heroInView ? " visible" : ""}`}>
                 <button className="btn-primary" onClick={() => scrollTo("Projects")}>View Projects</button>
                 <button className="btn-secondary" onClick={() => scrollTo("Contact")}>Get in Touch</button>
-                <a href="/resume-new.pdf" download="resume-new.pdf" className="btn-secondary">
+                <a href="/LatestResume.pdf" download="LatestResume.pdf" className="btn-secondary">
                   Resume
                 </a>
             </div>
@@ -1814,6 +1928,14 @@ const sendEmail = (e) => {
       {/* PROJECTS */}
       <ProjectsSlider PROJECTS={PROJECTS} projectsRef={projectsRef} projectsInView={projectsInView} />
 <MinilangPlayground />
+
+      {/* FREELANCE */}
+      <FreelanceSection
+        freelanceRef={freelanceRef}
+        freelanceInView={freelanceInView}
+        onContact={() => scrollTo("Contact")}
+      />
+
       {/* CONTACT */}
       <section id="contact" ref={contactRef}>
         <div className="section-wrap">
