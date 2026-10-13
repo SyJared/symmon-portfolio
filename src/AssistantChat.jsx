@@ -43,7 +43,8 @@ function parseReply(text) {
   const match = text.match(/\[\[go:(\w+)\]\]/i);
   const target = match ? match[1].toLowerCase() : null;
   return {
-    text: text.replace(/\[\[go:\w+\]\]/gi, "").trim(),
+    // also hide a half-streamed tag like "[[go:pro" until it completes
+    text: text.replace(/\[\[go:\w+\]\]/gi, "").replace(/\[\[[^\]]*$/, "").trim(),
     target: target && SECTION_LABELS[target] ? target : null,
   };
 }
@@ -78,6 +79,7 @@ export default function AssistantChat({ onNavigate }) {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [slow, setSlow] = useState(false);
+  const [receiving, setReceiving] = useState(false); // first words have arrived
   const bodyRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -90,7 +92,10 @@ export default function AssistantChat({ onNavigate }) {
   }, []);
 
   useEffect(() => {
-    bodyRef.current?.scrollTo({ top: bodyRef.current.scrollHeight, behavior: "smooth" });
+    bodyRef.current?.scrollTo({
+      top: bodyRef.current.scrollHeight,
+      behavior: loading ? "auto" : "smooth", // no jitter while text is streaming in
+    });
   }, [messages, loading, open]);
 
   useEffect(() => {
@@ -139,13 +144,39 @@ export default function AssistantChat({ onNavigate }) {
           })),
         }),
       });
-      const data = await res.json().catch(() => ({}));
       if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
         const err = new Error(data.error || "Something went wrong.");
         err.status = res.status;
         throw err;
       }
-      setMessages((m) => [...m, { role: "assistant", content: data.reply }]);
+
+      // The reply arrives as a text stream. Grow one assistant message as
+      // chunks come in; the first chunk replaces the typing indicator.
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let full = "";
+      let started = false;
+      try {
+        for (;;) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          full += decoder.decode(value, { stream: true });
+          if (!full.trim()) continue;
+          const snapshot = full;
+          if (!started) {
+            started = true;
+            setReceiving(true);
+            setMessages((m) => [...m, { role: "assistant", content: snapshot }]);
+          } else {
+            setMessages((m) => [...m.slice(0, -1), { role: "assistant", content: snapshot }]);
+          }
+        }
+      } catch (streamErr) {
+        // Connection dropped mid-reply: keep what we have, otherwise treat as a failure.
+        if (!started) throw streamErr;
+      }
+      if (!started) throw new Error("Empty reply");
     } catch (err) {
       // 502/503/504 (upstream busy or down) or no status at all (network
       // failure) -> tell the visitor it may be traffic and let them retry.
@@ -162,6 +193,7 @@ export default function AssistantChat({ onNavigate }) {
     } finally {
       clearTimeout(slowTimer);
       setSlow(false);
+      setReceiving(false);
       setLoading(false);
     }
   };
@@ -227,7 +259,7 @@ export default function AssistantChat({ onNavigate }) {
               );
             })}
 
-            {loading && (
+            {loading && !receiving && (
               <div className="ag-msg assistant">
                 <div className="ag-bubble ag-typing" aria-label="Assistant is typing">
                   <span /><span /><span />
