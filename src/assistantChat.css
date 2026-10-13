@@ -1,0 +1,416 @@
+/* Portfolio Guide widget. Blueprint look to match the rest of the site.
+   Classes use the "ag-" prefix so they never clash with older .assistant-* rules. */
+
+/* ---------- Launcher ---------- */
+.ag-launcher {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 120;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  height: 52px;
+  padding: 0 1.2rem 0 1rem;
+  background: linear-gradient(135deg, #14407a 0%, #0a1f3d 100%);
+  color: #eaf3ff;
+  border: 1px solid rgba(143, 203, 255, 0.4);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 24px rgba(143, 203, 255, 0.12);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+/* orange registration marks, same motif as the cards */
+.ag-launcher::before,
+.ag-launcher::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #ff5a36;
+  transition: all 0.25s ease;
+  pointer-events: none;
+}
+.ag-launcher::before { top: -5px; left: -5px; border-right: none; border-bottom: none; }
+.ag-launcher::after { bottom: -5px; right: -5px; border-left: none; border-top: none; }
+.ag-launcher:hover {
+  transform: translateY(-3px);
+  border-color: #8fcbff;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45), 0 0 32px rgba(143, 203, 255, 0.25);
+}
+.ag-launcher:hover::before { top: -8px; left: -8px; width: 14px; height: 14px; }
+.ag-launcher:hover::after { bottom: -8px; right: -8px; width: 14px; height: 14px; }
+.ag-launcher:focus-visible { outline: 2px solid #8fcbff; outline-offset: 5px; }
+
+.ag-launcher-icon { display: inline-flex; color: #8fcbff; }
+.ag-launcher-icon svg { width: 22px; height: 22px; display: block; }
+.ag-spark {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: agTwinkle 3.2s ease-in-out infinite;
+}
+@keyframes agTwinkle {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  50% { transform: scale(0.7) rotate(45deg); opacity: 0.7; }
+}
+
+/* expanding ring that invites a click until the chat is opened */
+.ag-launcher-ring {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(143, 203, 255, 0.55);
+  pointer-events: none;
+  animation: agRing 2.8s ease-out infinite;
+}
+@keyframes agRing {
+  0% { transform: scale(1); opacity: 0.8; }
+  70%, 100% { transform: scale(1.28, 1.5); opacity: 0; }
+}
+
+/* "online" dot */
+.ag-launcher-dot {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #4ade80;
+  border: 2px solid #0a1f3d;
+  animation: agPulse 2s infinite;
+}
+@keyframes agPulse {
+  0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.55); }
+  70% { box-shadow: 0 0 0 7px rgba(74, 222, 128, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+}
+
+.ag-launcher.open { background: #0f2a52; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); }
+.ag-launcher.open .ag-launcher-ring,
+.ag-launcher.open .ag-launcher-dot { display: none; }
+
+/* ---------- Teaser bubble ---------- */
+.ag-teaser {
+  position: fixed;
+  right: 1.5rem;
+  bottom: calc(1.5rem + 52px + 16px);
+  z-index: 120;
+  display: flex;
+  align-items: stretch;
+  max-width: 250px;
+  background: #eaf3ff;
+  color: #0a1f3d;
+  border-left: 3px solid #ff5a36;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  animation: agIn 0.4s ease both;
+}
+.ag-teaser::after {
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  right: 24px;
+  width: 14px;
+  height: 14px;
+  background: #eaf3ff;
+  transform: rotate(45deg);
+}
+.ag-teaser-text {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 0.75rem 0.5rem 0.75rem 0.85rem;
+  text-align: left;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: #0a1f3d;
+  cursor: pointer;
+}
+.ag-teaser-text strong { color: #d4401f; }
+.ag-teaser-x {
+  background: transparent;
+  border: none;
+  padding: 0 0.7rem;
+  color: #54709a;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+.ag-teaser-x:hover { color: #0a1f3d; }
+
+/* ---------- Panel ---------- */
+.ag-panel {
+  position: fixed;
+  right: 1.5rem;
+  bottom: calc(1.5rem + 52px + 16px);
+  z-index: 120;
+  width: 380px;
+  max-width: calc(100vw - 2rem);
+  height: min(580px, calc(100vh - 8.5rem));
+  height: min(580px, calc(100dvh - 8.5rem));
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(8, 24, 48, 0.98);
+  background-image:
+    linear-gradient(rgba(143, 203, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(143, 203, 255, 0.045) 1px, transparent 1px);
+  background-size: 24px 24px;
+  border: 1px solid rgba(143, 203, 255, 0.3);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+  transform-origin: bottom right;
+  animation: agPop 0.24s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+}
+@keyframes agPop {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.ag-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.85rem 1rem;
+  background: rgba(15, 42, 82, 0.75);
+  border-bottom: 1px solid rgba(143, 203, 255, 0.18);
+}
+.ag-avatar {
+  position: relative;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  color: #8fcbff;
+  border: 1px solid rgba(143, 203, 255, 0.45);
+  background: rgba(10, 31, 61, 0.9);
+}
+.ag-avatar svg { width: 20px; height: 20px; }
+.ag-avatar::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 7px;
+  height: 7px;
+  border-top: 2px solid #ff5a36;
+  border-left: 2px solid #ff5a36;
+}
+.ag-head-text { flex: 1; min-width: 0; }
+.ag-title {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #fff;
+}
+.ag-status {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.3rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: #7691b8;
+}
+.ag-status i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+}
+.ag-icon-btn {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: 1px solid rgba(143, 203, 255, 0.2);
+  color: #cfe0f5;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ag-icon-btn svg { width: 14px; height: 14px; }
+.ag-icon-btn:hover:not(:disabled) { border-color: #ff5a36; color: #ff5a36; }
+.ag-icon-btn:disabled { opacity: 0.35; cursor: default; }
+.ag-icon-btn:focus-visible { outline: 2px solid #8fcbff; outline-offset: 2px; }
+
+/* ---------- Messages ---------- */
+.ag-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(143, 203, 255, 0.3) transparent;
+}
+.ag-msg {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  max-width: 90%;
+  animation: agIn 0.3s ease both;
+}
+@keyframes agIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.ag-msg.user { align-self: flex-end; align-items: flex-end; }
+.ag-msg.assistant { align-self: flex-start; align-items: flex-start; }
+.ag-bubble {
+  padding: 0.7rem 0.9rem;
+  font-size: 0.8rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: #cfe0f5;
+  background: rgba(15, 42, 82, 0.75);
+  border: 1px solid rgba(143, 203, 255, 0.16);
+  border-left: 2px solid #8fcbff;
+}
+.ag-msg.user .ag-bubble {
+  color: #fff;
+  background: rgba(255, 90, 54, 0.13);
+  border: 1px solid rgba(255, 90, 54, 0.35);
+  border-right: 2px solid #ff5a36;
+}
+.ag-msg.error .ag-bubble { color: #ffb09d; border-left-color: #ff5a36; }
+
+.ag-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.8rem;
+  background: transparent;
+  border: 1px solid rgba(255, 90, 54, 0.55);
+  color: #ff7a5c;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ag-go svg { width: 12px; height: 12px; transition: transform 0.2s; }
+.ag-go:hover { background: #ff5a36; color: #0a1f3d; }
+.ag-go:hover svg { transform: translateX(3px); }
+
+.ag-typing { display: inline-flex; gap: 0.3rem; padding: 0.85rem 0.95rem; }
+.ag-typing span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #8fcbff;
+  animation: agDot 1.2s infinite ease-in-out;
+}
+.ag-typing span:nth-child(2) { animation-delay: 0.15s; }
+.ag-typing span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes agDot {
+  0%, 80%, 100% { opacity: 0.25; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1.1); }
+}
+.ag-slow {
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  color: #7691b8;
+}
+
+/* ---------- Suggestions ---------- */
+.ag-suggest-label {
+  margin-top: 0.3rem;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #5f7ba3;
+}
+.ag-chips { display: flex; flex-direction: column; gap: 0.45rem; }
+.ag-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  background: rgba(15, 42, 82, 0.35);
+  border: 1px dashed rgba(143, 203, 255, 0.3);
+  color: #8fcbff;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ag-chip svg { width: 12px; height: 12px; flex-shrink: 0; opacity: 0.6; transition: transform 0.2s; }
+.ag-chip:hover { border-style: solid; border-color: #8fcbff; background: rgba(143, 203, 255, 0.09); }
+.ag-chip:hover svg { transform: translateX(3px); opacity: 1; }
+
+/* ---------- Input ---------- */
+.ag-input-row {
+  display: flex;
+  border-top: 1px solid rgba(143, 203, 255, 0.18);
+  background: rgba(8, 24, 48, 0.95);
+}
+.ag-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.95rem 1rem;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #eaf3ff;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.78rem;
+  box-shadow: inset 0 -2px 0 transparent;
+  transition: box-shadow 0.2s;
+}
+.ag-input::placeholder { color: #54709a; }
+.ag-input:focus { box-shadow: inset 0 -2px 0 #ff5a36; }
+.ag-send {
+  width: 52px;
+  display: grid;
+  place-items: center;
+  background: #ff5a36;
+  border: none;
+  color: #0a1f3d;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.ag-send svg { width: 16px; height: 16px; }
+.ag-send:hover:not(:disabled) { background: #ff7a5c; }
+.ag-send:disabled { background: rgba(143, 203, 255, 0.06); color: #3d5a80; cursor: default; }
+.ag-send:focus-visible { outline: 2px solid #8fcbff; outline-offset: -3px; }
+.ag-foot {
+  padding: 0.4rem 1rem 0.5rem;
+  text-align: center;
+  font-size: 0.56rem;
+  letter-spacing: 0.04em;
+  color: #5f7ba3;
+  background: rgba(8, 24, 48, 0.95);
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 480px) {
+  .ag-launcher { right: 1rem; bottom: 1rem; width: 52px; padding: 0; justify-content: center; }
+  .ag-launcher-label { display: none; }
+  .ag-teaser { right: 1rem; bottom: calc(1rem + 52px + 16px); max-width: calc(100vw - 2rem); }
+  .ag-panel {
+    right: 1rem;
+    left: 1rem;
+    width: auto;
+    max-width: none;
+    bottom: calc(1rem + 52px + 16px);
+    height: min(580px, calc(100vh - 7.5rem));
+    height: min(580px, calc(100dvh - 7.5rem));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ag-spark, .ag-launcher-ring, .ag-launcher-dot, .ag-typing span { animation: none; }
+  .ag-panel, .ag-msg, .ag-teaser { animation: none; }
+  .ag-launcher, .ag-launcher::before, .ag-launcher::after { transition: none; }
+}

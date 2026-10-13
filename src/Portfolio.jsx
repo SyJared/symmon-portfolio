@@ -6,6 +6,7 @@ import MinilangPlayground from "./backend/MinilangPlayground";
 import ProjectsSlider from "./projectsSlider";
 import RoleRotator from "./roleRotator";
 import FreelanceSection from "./freelanceSection";
+import AssistantChat from "./AssistantChat";
 import symdocd from "/symdocd.png";
 import symdocq from "/symdocq.png";
 import symmonidash from "/symmonidash.png";
@@ -1775,6 +1776,164 @@ const sendEmail = (e) => {
       .freelance-dot { animation: none; }
     }
 
+    /* AI ASSISTANT */
+    .assistant-launcher {
+      position: fixed;
+      right: 1.5rem;
+      bottom: 1.5rem;
+      z-index: 120;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      height: 46px;
+      padding: 0 1.1rem;
+      background: #ff5a36;
+      color: #0a1f3d;
+      border: none;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 8px 28px rgba(255,90,54,0.3);
+      transition: all 0.2s;
+    }
+    .assistant-launcher:hover { background: #ff7a5c; transform: translateY(-2px); }
+    .assistant-launcher.open { width: 46px; padding: 0; justify-content: center; background: #0f2a52; color: #eaf3ff; border: 1px solid rgba(143,203,255,0.3); box-shadow: none; }
+    .assistant-panel {
+      position: fixed;
+      right: 1.5rem;
+      bottom: 5.2rem;
+      z-index: 120;
+      width: 360px;
+      max-width: calc(100vw - 2rem);
+      height: 500px;
+      max-height: calc(100vh - 7rem);
+      display: flex;
+      flex-direction: column;
+      background: rgba(10,31,61,0.97);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(143,203,255,0.25);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+      animation: assistantIn 0.25s ease;
+    }
+    @keyframes assistantIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .assistant-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.1rem;
+      border-bottom: 1px solid rgba(143,203,255,0.14);
+    }
+    .assistant-title {
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .assistant-sub { font-size: 0.6rem; letter-spacing: 0.1em; color: #7691b8; margin-top: 0.15rem; }
+    .assistant-close {
+      background: transparent;
+      border: 1px solid rgba(143,203,255,0.2);
+      color: #eaf3ff;
+      width: 28px; height: 28px;
+      cursor: pointer;
+      font-size: 0.75rem;
+    }
+    .assistant-close:hover { border-color: #ff5a36; color: #ff5a36; }
+    .assistant-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .assistant-msg { display: flex; flex-direction: column; gap: 0.4rem; max-width: 88%; }
+    .assistant-msg.user { align-self: flex-end; align-items: flex-end; }
+    .assistant-msg.assistant { align-self: flex-start; align-items: flex-start; }
+    .assistant-bubble {
+      font-size: 0.78rem;
+      line-height: 1.6;
+      padding: 0.65rem 0.85rem;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      border: 1px solid rgba(143,203,255,0.14);
+      background: rgba(15,42,82,0.6);
+      color: #cfe0f5;
+    }
+    .assistant-msg.user .assistant-bubble { background: rgba(255,90,54,0.12); border-color: rgba(255,90,54,0.35); color: #fff; }
+    .assistant-msg.error .assistant-bubble { border-color: rgba(255,90,54,0.4); color: #ff9a82; }
+    .assistant-go {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      padding: 0.4rem 0.75rem;
+      background: rgba(143,203,255,0.06);
+      border: 1px solid rgba(143,203,255,0.3);
+      color: #8fcbff;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .assistant-go:hover { background: rgba(143,203,255,0.14); color: #fff; }
+    .assistant-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.2rem; }
+    .assistant-chip {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      padding: 0.4rem 0.7rem;
+      background: transparent;
+      border: 1px solid rgba(143,203,255,0.25);
+      color: #8fcbff;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+    }
+    .assistant-chip:hover { border-color: #8fcbff; background: rgba(143,203,255,0.08); }
+    .assistant-typing { display: inline-flex; gap: 0.3rem; padding: 0.8rem 0.9rem; }
+    .assistant-typing span {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: #8fcbff;
+      animation: assistantDot 1.2s infinite ease-in-out;
+    }
+    .assistant-typing span:nth-child(2) { animation-delay: 0.15s; }
+    .assistant-typing span:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes assistantDot { 0%, 80%, 100% { opacity: 0.25; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1.1); } }
+    .assistant-input-row { display: flex; border-top: 1px solid rgba(143,203,255,0.14); }
+    .assistant-input {
+      flex: 1;
+      min-width: 0;
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 0.9rem 1rem;
+      color: #eaf3ff;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+    }
+    .assistant-send {
+      width: 48px;
+      background: transparent;
+      border: none;
+      border-left: 1px solid rgba(143,203,255,0.14);
+      color: #ff5a36;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+    .assistant-send:hover:not(:disabled) { background: rgba(255,90,54,0.1); }
+    .assistant-send:disabled { color: #3d5a80; cursor: default; }
+    @media (prefers-reduced-motion: reduce) {
+      .assistant-panel { animation: none; }
+      .assistant-typing span { animation: none; opacity: 0.7; }
+    }
+    @media (max-width: 480px) {
+      .assistant-launcher { right: 1rem; bottom: 1rem; }
+      .assistant-panel { right: 1rem; bottom: 4.6rem; }
+      .assistant-launcher-text { display: none; }
+      .assistant-launcher { width: 46px; padding: 0; justify-content: center; }
+    }
+
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .hamburger { display: flex; }
@@ -1992,6 +2151,8 @@ const sendEmail = (e) => {
           </div>
         </div>
       </section>
+
+      <AssistantChat onNavigate={scrollTo} />
 
       {/* FOOTER */}
       <footer>
