@@ -4,7 +4,7 @@
  // to the portfolio knowledge in _knowledge.js.
 import { SYSTEM_PROMPT } from "./_knowledge.js";
 
-const MODEL = process.env.ASSISTANT_MODEL || "gemini-2.5-flash-lite";
+const MODEL = process.env.ASSISTANT_MODEL || "gemini-flash-latest";
 const MAX_HISTORY = 10;
 const MAX_CHARS = 500;
 const MAX_TOKENS = 800;
