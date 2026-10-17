@@ -202,11 +202,13 @@ export default function SymLangPlayground() {
           SymLang<br /><span className="dim">Playground.</span>
         </div>
         <p className={`ml-blurb${sectionInView ? " visible" : ""}`}>
-          A tiny programming language I built from scratch in Java — lexer, parser, and
-          tree-walking interpreter, no libraries. It runs in English or Tagalog from the
-          same engine: only the keywords change. This hits a real Spring Boot API running
-          my actual interpreter. Edit the code and hit run.
-        </p>
+  SymLang is a programming language you can write in Tagalog. I built it from
+  scratch in Java: a lexer, a parser, and a tree-walking interpreter, with no
+  libraries. Write <code>kung</code>, <code>habang</code>, and <code>gawain</code>{" "}
+  instead of <code>if</code>, <code>while</code>, and <code>function</code>, and
+  even the error messages come back in Tagalog. English works too, and both run
+  on the same engine. Pick a language, edit the code, and hit run.
+</p>
 
         <div className={`ml-examples${sectionInView ? " visible" : ""}`}>
           <span className="ml-group-label">LANGUAGE:</span>

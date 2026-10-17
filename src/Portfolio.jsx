@@ -215,7 +215,7 @@ const PROJECTS = [
     year: "2026",
     icon: "💻",
     description:
-      "A custom interpreted programming language built in Java featuring a lexer, recursive-descent parser, Abstract Syntax Tree (AST), and interpreter. Integrated with a Spring Boot REST API and deployed backend, allowing users to execute SymLang code directly from my portfolio. You can see the live demo below ↓",
+      "A programming language you can write in Tagalog, built from scratch in Java. SymLang has its own lexer, recursive-descent parser, Abstract Syntax Tree (AST), and tree-walking interpreter. Code uses Tagalog keywords like kung, habang, and gawain, and even errors are reported in Tagalog, while English is supported on the same engine. It runs on a Spring Boot REST API with a deployed backend, so you can execute SymLang code directly from my portfolio. You can see the live demo below ↓",
     stack: ["Java", "Spring Boot", "Docker", "REST API"],
     screenshots: [],
     demo: "",
