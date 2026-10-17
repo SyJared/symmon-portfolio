@@ -2,8 +2,6 @@ import { useState, useCallback, useRef, useEffect } from "react";
 
 const API_URL = "https://symlang-api.onrender.com/run";
 
-// Local copy of the same fade-in-on-scroll pattern used elsewhere in the portfolio,
-// so this section reveals itself the same way About/Skills/Projects/Contact do.
 function useInView(threshold = 0.15) {
   const ref = useRef(null);
   const [inView, setInView] = useState(false);
@@ -18,8 +16,16 @@ function useInView(threshold = 0.15) {
   return [ref, inView];
 }
 
+// ---------------------------------------------------------------------------
+// Examples, one set per language. Keys must match across languages so the
+// selected example carries over when the language is switched.
+// NOTE: the interpreter has no length() built-in yet, so the array/string
+// examples avoid it. Once you add length (e.g. "haba" in Tagalog), you can
+// switch them back.
+// ---------------------------------------------------------------------------
 const EXAMPLES = {
-  Recursion: `function factorial(n) {
+  en: {
+    Recursion: `function factorial(n) {
   if (n <= 1) {
     return 1;
   } else {
@@ -30,7 +36,7 @@ const EXAMPLES = {
 print("5! =", factorial(5));
 print("7! =", factorial(7));`,
 
-  Loops: `let i = 0;
+    Loops: `let i = 0;
 let sum = 0;
 
 while (i < 10) {
@@ -40,11 +46,11 @@ while (i < 10) {
 
 print("sum 0..9 =", sum);`,
 
-  Arrays: `let nums = [4, 8, 15, 16, 23, 42];
+    Arrays: `let nums = [4, 8, 15, 16, 23, 42];
 let total = 0;
 let i = 0;
 
-while (i < length(nums)) {
+while (i < 6) {
   total = total + nums[i];
   i = i + 1;
 }
@@ -52,37 +58,86 @@ while (i < length(nums)) {
 print("array:", nums);
 print("total:", total);`,
 
-  Strings: `let name = "world";
+    Strings: `let name = "world";
 let greeting = "hello, " + name + "!";
 
 print(greeting);
-print("length is", length(greeting));`,
+print("again:", greeting + " :)");`,
+  },
+
+  tl: {
+    Recursion: `gawain factorial(n) {
+  kung (n <= 1) {
+    ibalik 1;
+  } kundi {
+    ibalik n * factorial(n - 1);
+  }
+}
+
+ilimbag("5! =", factorial(5));
+ilimbag("7! =", factorial(7));`,
+
+    Loops: `itakda i = 0;
+itakda sum = 0;
+
+habang (i < 10) {
+  sum = sum + i;
+  i = i + 1;
+}
+
+ilimbag("sum 0..9 =", sum);`,
+
+    Arrays: `itakda nums = [4, 8, 15, 16, 23, 42];
+itakda total = 0;
+itakda i = 0;
+
+habang (i < 6) {
+  total = total + nums[i];
+  i = i + 1;
+}
+
+ilimbag("array:", nums);
+ilimbag("total:", total);`,
+
+    Strings: `itakda pangalan = "mundo";
+itakda bati = "kumusta, " + pangalan + "!";
+
+ilimbag(bati);
+ilimbag("ulit:", bati + " :)");`,
+  },
 };
 
+// Small UI strings that change with the language.
+const LANGS = {
+  en: { label: "English", printFn: "print", file: "main.sym" },
+  tl: { label: "Tagalog", printFn: "ilimbag", file: "main.tl.sym" },
+};
+
+const DEFAULT_LANG = "en";
 const DEFAULT_EXAMPLE = "Recursion";
 
-export default function MinilangPlayground() {
-  const [code, setCode] = useState(EXAMPLES[DEFAULT_EXAMPLE]);
+export default function SymLangPlayground() {
+  const [lang, setLang] = useState(DEFAULT_LANG);
+  const [code, setCode] = useState(EXAMPLES[DEFAULT_LANG][DEFAULT_EXAMPLE]);
   const [result, setResult] = useState({ output: [], error: null });
   const [running, setRunning] = useState(false);
   const [wakingUp, setWakingUp] = useState(false);
   const [activeExample, setActiveExample] = useState(DEFAULT_EXAMPLE);
   const [sectionRef, sectionInView] = useInView(0.1);
 
-  const runCode = useCallback(async (source) => {
+  // `language` is passed explicitly so a run never uses a stale value.
+  const runCode = useCallback(async (source, language) => {
     setRunning(true);
     setWakingUp(false);
 
-    // The free-tier server can take 30-50s to wake up after being idle.
-    // Only show the "waking up" message if we're actually waiting that long —
-    // a normal warm request (usually well under a second) never sees this.
+    // Free-tier server can take 30-50s to wake after idling.
     const wakeTimer = setTimeout(() => setWakingUp(true), 4000);
 
     try {
       const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code: source }),
+        body: JSON.stringify({ code: source, lang: language }),
       });
 
       if (!response.ok) {
@@ -94,7 +149,7 @@ export default function MinilangPlayground() {
     } catch (err) {
       setResult({
         output: [],
-        error: `Could not reach the MiniLang server: ${err.message}`,
+        error: `Could not reach the SymLang server: ${err.message}`,
       });
     } finally {
       clearTimeout(wakeTimer);
@@ -103,11 +158,20 @@ export default function MinilangPlayground() {
     }
   }, []);
 
-  const handleRun = () => runCode(code);
+  const handleRun = () => runCode(code, lang);
 
   const handleExample = (name) => {
     setActiveExample(name);
-    setCode(EXAMPLES[name]);
+    setCode(EXAMPLES[lang][name]);
+    setResult({ output: [], error: null });
+  };
+
+  // Switching language swaps the editor to the same example in the new
+  // language, so the code always matches the keywords the server expects.
+  const handleLang = (next) => {
+    if (next === lang) return;
+    setLang(next);
+    setCode(EXAMPLES[next][activeExample]);
     setResult({ output: [], error: null });
   };
 
@@ -116,7 +180,6 @@ export default function MinilangPlayground() {
       e.preventDefault();
       handleRun();
     }
-    // Basic tab support inside the textarea
     if (e.key === "Tab") {
       e.preventDefault();
       const el = e.target;
@@ -140,14 +203,27 @@ export default function MinilangPlayground() {
         </div>
         <p className={`ml-blurb${sectionInView ? " visible" : ""}`}>
           A tiny programming language I built from scratch in Java — lexer, parser, and
-          tree-walking interpreter, no libraries. This runs on a real Spring Boot API
-          hitting my actual interpreter. Edit the code and hit run.
-          
+          tree-walking interpreter, no libraries. It runs in English or Tagalog from the
+          same engine: only the keywords change. This hits a real Spring Boot API running
+          my actual interpreter. Edit the code and hit run.
         </p>
-        
+
         <div className={`ml-examples${sectionInView ? " visible" : ""}`}>
-          <p className={`ml-blurb${sectionInView ? " visible" : ""}`}>EXAMPLES:</p>
-          {Object.keys(EXAMPLES).map((name) => (
+          <span className="ml-group-label">LANGUAGE:</span>
+          {Object.keys(LANGS).map((code2) => (
+            <button
+              key={code2}
+              className={`ml-example-btn${lang === code2 ? " active" : ""}`}
+              onClick={() => handleLang(code2)}
+            >
+              {LANGS[code2].label}
+            </button>
+          ))}
+        </div>
+
+        <div className={`ml-examples${sectionInView ? " visible" : ""}`}>
+          <span className="ml-group-label">EXAMPLES:</span>
+          {Object.keys(EXAMPLES[lang]).map((name) => (
             <button
               key={name}
               className={`ml-example-btn${activeExample === name ? " active" : ""}`}
@@ -164,7 +240,7 @@ export default function MinilangPlayground() {
               <span className="ml-dot ml-dot-red" />
               <span className="ml-dot ml-dot-yellow" />
               <span className="ml-dot ml-dot-green" />
-              <span className="ml-panel-name">main.mini</span>
+              <span className="ml-panel-name">{LANGS[lang].file}</span>
             </div>
             <textarea
               className="ml-editor"
@@ -186,8 +262,15 @@ export default function MinilangPlayground() {
               </button>
             </div>
             <div className="ml-output">
-              {result.output.length === 0 && !result.error && (
-                <div className="ml-placeholder">// print() output will show up here</div>
+              {wakingUp && (
+                <div className="ml-placeholder">
+                  // server is waking up, this can take up to a minute…
+                </div>
+              )}
+              {result.output.length === 0 && !result.error && !wakingUp && (
+                <div className="ml-placeholder">
+                  // {LANGS[lang].printFn}() output will show up here
+                </div>
               )}
               {result.output.map((line, i) => (
                 <div key={i} className="ml-line">
@@ -226,13 +309,22 @@ const CSS = `
 #playground .ml-examples {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 0.6rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.2rem;
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.8s ease 0.3s;
 }
 #playground .ml-examples.visible { opacity: 1; transform: translateY(0); }
+
+#playground .ml-group-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: #8892a4;
+  min-width: 5.5rem;
+}
 
 #playground .ml-example-btn {
   font-family: 'DM Mono', monospace;
@@ -262,6 +354,7 @@ const CSS = `
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
+  margin-top: 1.5rem;
   opacity: 0;
   transform: translateY(24px);
   transition: all 0.8s ease 0.4s;
